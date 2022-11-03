@@ -84,6 +84,87 @@ ANS: 2 RTTs for index , 1 for small, 1 for huge and 2 RTTs for big on x.y.com (2
 
 ANS:2 RTTs for index, 1 for both small and huge, and 2 RTTs for big on x.y.com (2+1+2 = 5RTTs with 2TCPs)
 
+# MIDTERM 2 
+
+## Midterm Content
+
+> 3.1 - 5.2 
+>
+> - **Chapter 3: Transport Layer (TCP // UDP)**
+>
+>   - **<u>3.1 - Intro</u>**
+>
+>     - 3.1.1 Relationship Between Transport and Network Layers
+>     - 3.1.2 Overview of the Transport Layer in the Internet
+>
+>   - <u>**3.2 - Multiplexing and Demultiplexing**</u>
+>
+>   - <u>**3.3 - Connectionless Transport: UDP**</u>
+>
+>     - 3.3.1 UDP Segment Structure
+>     - 3.3.2 UDP Checksum
+>
+>   - **<u>3.4 - Principles of Reliable Data Transfer</u>**
+>
+>     - 3.4.1 Building a Reliable Data Transfer Protocol 
+>     - 3.4.2 Pipelined Reliable Data Transfer Protocols 
+>     - 3.4.3 Go-Back-N (GBN) 
+>     - 3.4.4 Selective Repeat (SR)
+>
+>   - **<u>3.5 - Connection-Oriented Transport: TCP</u>**
+>
+>     - 3.5.1 The TCP Connection
+>     - 3.5.2 TCP Segment Structure
+>     - 3.5.3 Round-Trip Time Estimation and Timeout 
+>     - 3.5.4 Reliable Data Transfer
+>     - 3.5.5 Flow Control 
+>     - 3.5.6 TCP Connection Management
+>
+>   - **<u>3.6 - Principles of Congestion Control</u>**
+>
+>     - 3.6.1 The Causes and the Costs of Congestion 
+>     - 3.6.2 Approaches to Congestion Control
+>
+>   - **<u>3.7 - TCP Congestion Control</u>**
+>
+>     - 3.7.1 Fairness
+>     - 3.7.2 Explicit Congestion Notification (ECN): Network-assisted Congestion Control
+>
+>     
+>
+> - **Chapter 4: The Network Layer  (Data Plane)** 
+>
+>   - **<u>4.1 - Overview of Network Layer</u>**
+>
+>     - 4.1.1 Forwarding and Routing: The Network Data and Control Planes
+>     - 4.1.2 Network Service Models
+>
+>   - **<u>4.3 - The Internet Protocol (IP): IPv4, Addressing, IPv6, and More</u>**
+>
+>     - 4.3.1 IPv4 Datagram Format
+>     - 4.3.2 IPv4 Datagram Fragmentation 
+>     - 4.3.3 IPv4 Addressing
+>     - 4.3.4 Network Address Translation (NAT) 
+>     - 4.3.5 IPv6
+>
+>     
+>
+> - **Chapter 5: The Network Layer (Control Plane)**
+>
+>   - <u>**5.1 - Introduction**</u>
+>   - <u>**5.2 - Routing Algorithms**</u>
+>     - 5.2.1 The Link-State (LS) Routing Algorithm 
+>     - 5.2.2 The Distance-Vector (DV) Routing Algorithm
+
+> <u>**Note:**</u> 
+>
+> - **pros and cons of:**
+>   - The Link-State (LS) Routing Algorithm
+>   - The Distance-Vector (DV) Routing Algorithm
+> - **Calculate shortest path of:**
+>   - The Link-State (LS) Routing Algorithm
+>   - The Distance-Vector (DV) Routing Algorithm
+
 # Chapter 1 - Computer Networks and the Internet
 
 ![image-20221006171245818](image-20221006171245818.png)
@@ -966,6 +1047,65 @@ Recall that the Internet makes two distinct transport-layer protocols available 
 > -  UDP is a datagram
 > - TCP is a segment.
 
+
+
+#### Transport-layer protocol Elements
+
+![image-20221103143056642](assets/image-20221103143056642.png)
+
+**Transport-layer protocol elements** 
+
+- Services provided to application layer 
+  - To support HTTP, DNS, etc.
+- **Services provided by network layer**
+  - ex. by IP.
+- **Transport-layer protocol mechanisms**
+  - ex. how to fill the gap
+
+| Level       | Type of service Layer |
+| ----------- | --------------------- |
+| 5 (Highest) | Application           |
+| 4           | Transport             |
+| 3           | Network               |
+| 2           | Data Link             |
+| 1 (Lowest)  | Physical              |
+
+#### Transport Layer Services
+
+![image-20221103143127572](assets/image-20221103143127572.png)
+
+**Services Provided by the transport layer**
+
+- Endpoint to endpoint communication
+  - endpoint: an application process in end-hosts
+- connection-oriented vs connectionless
+- data transfer: reliable vs unreliable
+
+**Example: Internet transport-layer services**
+
+- connection-oriented, reliable by TCP 
+- connectionless, unreliable by UDP
+
+#### Network layer services
+
+![image-20221103143635756](assets/image-20221103143635756.png)
+
+**Services provided by network layer**
+
+- Move packets from one end-host to another
+- Possibly through many intermediate systems (Ex. routers)
+
+**Example: Internet network-layer services**
+
+- IP: store-and-forward packet switching
+- packets may get:
+  - lost at communication link, router or receiver buffer
+  - duplicated
+  - corrupted
+  - reordered
+
+
+
 ## 3.2 Multiplexing and Demultiplexing 
 
 > **Sockets**
@@ -1023,9 +1163,33 @@ connectionSocket, addr = serverSocket.accept()
 
 ![image-20221020150439112](image-20221020150439112.png)
 
+![image-20221103143736599](assets/image-20221103143736599.png)
+
+#### What's under a socket?
+
+![image-20221103143831371](assets/image-20221103143831371.png)
+
+#### Socket container (Encapsulation)
+
+- Frame Header (Physical Layer)
+- Frame Payload:
+  - Packet Header (Network Layer)
+  - Packet Payload:
+    - TPDU header (Transport Layer)
+    - Payload:
+      - DATA
+
+- Frame Trailer
+
+
+
 ## 3.3 Connectionless Transport: UDP
 
+![image-20221103144330889](assets/image-20221103144330889.png)
+
 #### Why UDP over TCP?
+
+![image-20221103144401430](assets/image-20221103144401430.png)
 
 - Finer application-level control over what data is sent, and when.
 - No connection establishment.
@@ -1039,6 +1203,8 @@ connectionSocket, addr = serverSocket.accept()
 The UDP header has only **four fields**, each consisting of **two bytes** (8 bytes total).
 
 ![image-20221020151510531](image-20221020151510531.png)
+
+![image-20221103144418768](assets/image-20221103144418768.png)
 
 #### UDP Checksum
 
@@ -1055,7 +1221,48 @@ If one of the bits is a 0, then we know that errors have been introduced into th
 
 > ***Note:*** Some implementations of UDP simply discard the damaged segment; others pass the damaged segment to the application with a warning.
 
+![image-20221103144446190](assets/image-20221103144446190.png)
+
 ## 3.4 Principles of Reliable Data Transfer
+
+#### What could go wrong?
+
+- Lost:
+  - Transmission error or network congestion
+- Duplicated:
+  - Deleted by referring to sequence number; **done**
+- corrupted:
+  - Arrived but in “bad shape”
+- reordered:
+  - Rearranged by referring to sequence number; **done**
+
+#### Error Detection
+
+- Corrupted packets
+  - Detected by TCP checksum
+    - Action: drop!
+- Lost packets
+  - How do you tell if something is already lost?
+  - TCP sender
+    - Timer for acknowledgment
+  - TCP receiver (cumulative acknowledgment)
+    - duplicate acknowledgment
+
+#### Error and Delay solutions
+
+##### **Sender Timer**
+
+- start a timer when sending out a packet
+  - In reality: one timer per a window of packets
+- On acknowledgment “covering” this packet • cancel the timer and setup another one.
+- If timer timeouts: indicate packet may be lost
+
+##### Timeout Value
+
+- Too soon: unnecessary transmission
+- Too late: “slow response”
+
+
 
 > **ARQ (Automatic Repeat reQuest) protocols.**
 >
@@ -1073,6 +1280,44 @@ Three additional protocol capabilities are required in ARQ protocols to handle t
 
 the sender will not send the next bit of data until the ACK or NAK has been received.
 
+#### Nagle's Algorithm (Sender approach)
+
+> **Problem**
+>
+> Data gets written byte-by-byte which leads to huge traffic of:
+>
+> - Data packets
+> - ACK packets
+>
+> **Solution: The algorithm**
+>
+> Goal: Send either big packets or lower packet overhead.
+>
+> *Cons of the algorithm:*
+>
+> - Mouse movement, delays updates
+> - Delayed acknowledgements
+
+#### David Clark Algorithm (Receiver approach)
+
+> **Problem**
+>
+> - silly window syndrome: application keeps reading data byte-by-byte
+> - receiver keeps advertising small window (thus small packets)
+>
+> **Solution: The Algorithm**
+>
+> Goal: Try and advertise bigger windows.
+>
+> receiver only advertises:
+>
+> - at least one MSS, or
+> - half window size
+>
+> *Cons of the algorithm:* 
+>
+> - Extra Delay
+
 #### Consider three possibilities for handling corrupted ACKs or NAKs:
 
 - If both are corrupt then you get a loop of retransmitting
@@ -1085,6 +1330,10 @@ the sender will not send the next bit of data until the ACK or NAK has been rece
 > **sequence number**
 >
 > Singular bit to tell whether the data packet is a retransmission or not. Either a 1 or a 0
+
+#### Duplicate ACKS
+
+After 3 consecutive duplicate ack numbers, the packet is considered LOST.
 
 #### Reliable Data Transfer over a Lossy Channel with Bit Errors
 
@@ -1178,6 +1427,19 @@ Both Ethernet and PPP link-layer protocols have an MTU of 1,500 bytes.
 
 ![image-20221020161755945](image-20221020161755945.png)
 
+##### TCP Connection ID
+
+**TCP Connections:**
+
+- Connection -> connect()
+- Initiator -> listen()
+- Responder -> accept()
+
+**Connection flow:**
+
+- send()
+- recv()
+
 #### TCP Segment Structure
 
 When TCP sends a large file, such as an image as part of a Web page, it typically breaks the file into chunks of size MSS (except for the last chunk, which will often be less than the MSS)
@@ -1186,6 +1448,8 @@ When TCP sends a large file, such as an image as part of a Web page, it typicall
 
 **TCP packet/segment contains the following headers:**
 
+- **Source / Destination Port** - well-known port numbers (0~1023, privileged) (ex. 80: http; 443: https)
+
 - **Sequence number field (32-bit)** - used by the TCP sender and receiver in implementing a reliable data transfer service.
 - **Acknowledgment number field (32-bit)** - used by the TCP sender and receiver in implementing a reliable data transfer service.
 - **Receive window (16-bit)** - used for flow control. It is used to indicate the number of bytes that a receiver is willing to accept.
@@ -1193,16 +1457,18 @@ When TCP sends a large file, such as an image as part of a Web page, it typicall
 - **Options field** - used when a sender and receiver negotiate the maximum segment size (MSS) or as a window scaling factor for use in high-speed networks.
 - **Flag Field** **(6-bit)**
   - **ACK bit** - used to indicate that the value carried in the acknowledgment field is valid.
-  - **RST bit** - used for connection setup and teardown
+  - **RST bit** - used for connection setup and teardown (Rests connection)
   - **SYN** - used for connection setup and teardown
   - **FIN** - used for connection setup and teardown
   - **PSH** - indicates that the receiver should pass the data to the upper layer immediately.
   - **URG** - used to indicate that there is data in this segment that the sending-side upper layer entity has marked as “urgent.”
 - **Urgent data pointer field** **(16-bit)** - TCP must inform the receiving-side upper-layer entity when urgent data exists and pass it a pointer to the end of the urgent data.
 
+##### URG Pointers (Flag Fields)
+
+![image-20221103145722973](assets/image-20221103145722973.png)
+
 ##### Sequence Numbers and Acknowledgment Numbers
-
-
 
 ###### Sequence Numbers
 
@@ -1293,6 +1559,24 @@ rwnd = RcvBuffer – [LastByteRcvd – LastByteRead]
 
 ![image-20221020172108816](image-20221020172108816.png)
 
+###### Window space
+
+- maximum window size 216-1: ~64K bytes!
+- Achievable throughput limit: ~ win/rtt
+- How to keep the “pipe” full?
+
+**TCP over "Long-fat" networks**
+
+- Long: large round-trip time
+
+- Fat: high bandwidth
+
+- Low utilization due to window limit
+
+  
+
+  ![image-20221103145536489](assets/image-20221103145536489.png)
+
 #### TCP connection Management
 
 ![image-20221020172333938](image-20221020172333938.png)
@@ -1301,7 +1585,32 @@ rwnd = RcvBuffer – [LastByteRcvd – LastByteRead]
 
 This special segment has a flag bit in the segment’s header, the FIN bit (see Figure 3.29), set to 1. When the server receives this segment, it sends the client an acknowledgment segment in return. The server then sends its own shutdown segment, which has the FIN bit set to 1. Finally, the client acknowledges the server’s shutdown segment.
 
+
+
 ## 3.6 Principals of congestion control
+
+#### Load-Gain Curve
+
+> **Gain**
+>
+> Throughput / Delay
+
+- Load gain curve
+  - Low load (I)
+  - Medium Load (II)
+  - High Load (III)
+- Congestion
+  - Low Throughput (I)
+  - High Delay (II)
+  - Very Low gain (III)
+
+![image-20221103153511573](assets/image-20221103153511573.png)
+
+##### The 3 Stages (I, II and III):
+
+1. If the load is small, the throughput keeps up with the increasing load. After the load reaches the network capacity, at the “knee” of the curve, the throughput stops increasing.
+2.  Beyond the knee, as the load increases, <u>queues start to build up in the network,</u> thus increasing the end-to-end latency without adding to the throughput. The network is then said to be in a state of congestion.
+3. If the traffic load increases even further and gets to the “cliff” part of the curve, then the throughput experiences a rather drastic reduction. This is because <u>queues within the network have increased to the point that packets are being dropped.</u> If the sources choose to retransmit to recover from losses, then this adds further to the total load, resulting in a positive feedback loop that sends the network into congestion collapse.
 
 #### The Causes and the Costs of Congestion
 
@@ -1369,7 +1678,7 @@ Because TCP uses acknowledgments to trigger (or clock) its increase in congestio
 
 - TCP sender control only because TCP has already been implemented for several years prior.
 
-#### Slow start
+#### Slow start (In the first section of the curve)
 
 Slow start is adaptive and is not initialized implicitly.
 
@@ -1387,7 +1696,7 @@ If there is a loss event (i.e., congestion) indicated by a timeout, the TCP send
 
 ![image-20221021094609024](image-20221021094609024.png)
 
-#### Congestion Avoidance
+#### Congestion Avoidance (In the middle section of the curve)
 
 ![image-20221021093953370](image-20221021093953370.png)
 
@@ -1412,13 +1721,13 @@ If there is a loss event (i.e., congestion) indicated by a timeout, the TCP send
 
 #### Congestion control techniques
 
-- **Slow start**
-- **Congestion Avoidance** 
-- **Timeout retransmission**
+- **Slow start** (I)
+- **Congestion Avoidance** (II)
+- **Timeout retransmission** (III)
   - TCP timeout is quite conservative
   - pay attention to how ssthresh is adjusted
 
-##### Timeout Retransmit 
+##### Timeout Retransmit (In the 3rd section of the curve)
 
 - **Timeout**
   - RTO = d (SRTT + c RTTV)
@@ -1500,19 +1809,125 @@ Explicit Congestion Notification [RFC 3168] is the form of network-assisted cong
   - can lead to TCP crowding
 - Paralleling connections don't help because Browsers still use multiple UDP and TCP packets mixed. 
 
-# Chapter 4 - The Network Layer: Data Plane 
+# Chapter 4 - The Network Layer: Data Plane (Forwarding) 
 
 ## 4.1 Overview of Network Layer
 
 #### 4.1.1 Forwarding and Routing: The Network Data and Control Planes 
 
+> **NOTE:** 
+>
+> CONTROL PLANE = ROUTING = EXTERNAL ROUTER TRAFFIC
+>
+> DATA PLANE = FORWARDING = INTERNAL ROUTER TRAFFIC
+
+Goal of the Network Layer: to move packets from sending host to the receiving host using two functions:
+
+- **Forwarding** - When a packet arrives at a router’s input link, the router must move the packet to the appropriate output link.
+- **Routing** - The network layer must determine the route or path taken by packets as they flow from a sender to a receiver.
+
+> **Routing Algorithms**
+>
+> A routing algorithm would determine, for example, the path along which packets flow from H1 to H2
+>
+> ![image-20221103161256093](assets/image-20221103161256093.png)
+
+##### Forwarding and Routing
+
+> **Forwarding**
+>
+> The router-local action of transferring a packet from an input link interface to the appropriate output link interface.
+
+> **Forwarding Table** 
+>
+> A router forwards a packet by examining the value of one or more fields in the arriving packet’s header, and then using these header values to index into its forwarding table.
+
+> **Routing**
+>
+> The network-wide process that determines the end-to-end paths that packets take from source to destination. 
+
+##### Control Plane: The traditional approach 
+
+![image-20221103162656659](assets/image-20221103162656659.png)
+
+A routing algorithm runs in each and every router and both forwarding and routing functions are contained within a router. All networks have both a forwarding nd routing function.
+
+- Routing done automatically via routing algorithm.
+- Humans calculated and enter routing tables manually.
+
+Pros to the routing algorithms:
+
+- Fast, tested and automatic
+
+##### Control Plane: The SDN Approach
+
+![image-20221103162708596](assets/image-20221103162708596.png)
+
+> **SDN**
+>
+> software-defined networking. Where the network is “software-defined” because the controller that computes forwarding tables and interacts with routers is implemented in software.
+
+An alternative approach in which a physically separate, remote
+controller computes and distributes the forwarding tables to be used by each and every router.
+
+Usually this software is <u>open source</u> and available to everyone.
+
 #### 4.1.2 Network Service Models
+
+> **Network Service Models**
+>
+> Defines the characteristics of end-to-end delivery of packets between sending and receiving hosts.
+
+##### List of services used by Network Layer:
+
+- **Guaranteed delivery** - This service guarantees that a packet sent by a source host will eventually arrive at the destination host.
+- **Guaranteed delivery with bounded delay** - This service not only guarantees delivery of the packet, but delivery within a specified host-to-host delay bound (for example, within 100 msec).
+- **In-order packet delivery** - This service guarantees that packets arrive at the destination in the order that they were sent.
+- **Guaranteed minimal bandwidth** - This network-layer service emulates the behavior of a transmission link of a specified bit rate (for example, 1 Mbps) between sending and receiving hosts. As long as the sending host transmits bits (as part of packets) at a rate below the specified bit rate, then all packets are eventually delivered to the destination host.
+- **Security** - The network layer could encrypt all datagrams at the source and decrypt them at the destination, thereby providing confidentiality to all transport-layer segments.
+
+> **Best-effort service** **(No real service at all)**
+>
+> The Internet service does not guarantee delivery, accuracy or even a response. usually "good enough".
+>
+> ex. No packet reaching the destination = "Best-effort" satisfied
+
+Utilized application services:
+
+- streaming video services such as <u>Netflix</u> and video-over-IP
+
+- real-time conferencing applications such as <u>Skype</u> and <u>Facetime</u>.
+
+
 
 ## 4.3 The Internet Protocol (IP): IPv4, Addressing, IPv6, and More
 
 #### 4.3.1 - IPv4 Datagram Format
 
-#### 4.3.2 - IPv4 Datagram Fragmentation 
+> **Note:** A datagram is a Network-layer packet. 
+
+![image-20221103164209648](assets/image-20221103164209648.png)
+
+##### The key fields in the IPv4 datagram are the following:
+
+- **Version number (4-bits) -** These 4 bits specify the IP protocol version of the datagram. By looking at the version number, the router can determine how to interpret the remainder of the IP datagram. Different versions of IP use different datagram formats.
+- **Header Length (4-bits) -** to determine where in the IP datagram the payload (for example, the transport layer segment being encapsulated in this datagram) actually begins. Most IP datagrams do not contain options, so the typical IP datagram has a 20-byte header.
+- **Type of service -** The type of service (TOS) bits were included in the IPv4 header to allow different types of IP datagrams to be distinguished from each other. (ex. FTP, SMTP, etc.)
+- **Datagram length -**  This is the total length of the IP datagram (header plus data), measured in bytes. Since this field is 16 bits long, the theoretical maximum size of the IP datagram is 65,535 bytes. However, datagrams are rarely larger than 1,500 bytes, which allows an IP datagram to fit in the payload field of a maximally sized Ethernet frame.
+- **Identifier, flags, fragmentation offset -** These three fields have to do with so-called IP fragmentation, when a large IP datagram is broken into several smaller IP datagrams which are then forwarded independently to the destination, where they are reassembled before their payload data is passed up to the transport layer at the destination host.
+- **Time-to-Live (TTL) -** field is included to ensure that datagrams do not circulate forever.
+- **Protocol (TCP/UDP) -** The value of this field indicates the specific transport-layer protocol to which the data portion of this IP datagram should be passed.
+- **Header Checksum -** aids a router in detecting bit errors in a received IP datagram. 
+- **Source IP Address -** Host that created the datagram
+- **Destination IP address -** Recipient of datagram.
+- **Options -** allow an IP header to be extended. Header options were meant to be used rarely—hence the decision to save overhead by not including the information in options fields in every datagram header.
+- **Data (Payload) -** data to be delivered. Could be a UDP or TCP packet.
+
+#### 4.3.2 - IPv4 Addressing 
+
+> **Interface** 
+>
+> The boundary between the host and the physical link.
 
 #### 4.3.3 - IPv4 Addressing
 
@@ -1520,9 +1935,7 @@ Explicit Congestion Notification [RFC 3168] is the form of network-assisted cong
 
 #### 4.3.5 - IPv6
 
-## 4.5 Summary
-
- # Chapter 5 - The Network Layer: Control Plane
+ # Chapter 5 - The Network Layer: Control Plane (Routing)
 
 ## 5.1 - Introduction
 
@@ -1532,11 +1945,17 @@ Explicit Congestion Notification [RFC 3168] is the form of network-assisted cong
 
 #### 5.2.2 The Distance-Vector (DV) Routing Algorithm
 
+
+
+
+
+> **Note:** End of Midterm two material.
+
 ## 5.3 - Intra-AS Routing in the Internet: OSPF
 
 ## 5.4 - Routing Among the ISPs: BGP
 
-5.4.1 The Role of BGP
+#### 5.4.1 The Role of BGP
 
 #### 5.4.2 Advertising BGP Route Information 
 
