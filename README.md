@@ -1929,17 +1929,160 @@ Utilized application services:
 >
 > The boundary between the host and the physical link.
 
-#### 4.3.3 - IPv4 Addressing
+Each IP address is 32 bits long (equivalently, 4 bytes), and there are thus a total of 232 (or approximately 4 billion) possible IP addresses.
 
-#### 4.3.4 - Network Address Translation (NAT) 
+An IP address is technically associated with an interface, rather than with the host or router containing that interface.
 
-#### 4.3.5 - IPv6
+> Note: 8 bits = 1 byte ex. 
+>
+> 192.168.0.1
+>
+> (8-bit) . (8-bit) . (8-bit) . (8-bit)
+>
+> 192.168.0.1/24 = Masking the first three numbers
+>
+> 2^32 (~4 billion) different types of IPs possible
+>
+> <u>*Power of 2 because in binary you can have either a 1 or a 0*</u>
+
+> **dotted-decimal notation**
+>
+> Each byte of the address is written in its decimal form and is separated by a period (dot) from other bytes in the address.
+
+![image-20221103184554704](assets/image-20221103184554704.png)
+
+![image-20221103184641624](assets/image-20221103184641624.png)
+
+###### Subnets
+
+> **Subnet**
+>
+> A subnet is an island of interconnected computers isolated from the main network.
+
+![image-20221103185258258](assets/image-20221103185258258.png)
+
+Above has the subnets (6 in total):
+
+- XXX.X.**1**.X
+- XXX.X.**2**.X
+- XXX.X.**3**.X
+- XXX.X.**7**.X
+- XXX.X.**8**.X
+- XXX.X.**9**.X
+
+> **Classless Interdomain Routing (CIDR—pronounced cider)**
+>
+> generalizes the notion of subnet addressing. As with subnet addressing, the 32-bit IP address is divided into two parts and again has the dotted-decimal form a.b.c.d/x, where x indicates the number of bits in the first part of the address.
+
+##### Obtaining a Block of Addresses
+
+In order to obtain a block of IP addresses for use within an organization’s subnet, a network administrator might first contact its ISP, which would provide addresses from a larger block of addresses that had already been allocated to the ISP.
+
+##### Obtaining a Host Address: The Dynamic Host Configuration Protocol (DHCP)
+
+> **DHCP (Dynamic Host Configuration Protocol)**
+>
+> DHCP allows a host to obtain (be allocated) an IP address automatically. Because of the ease of DHCP it is referred to as <u>plug-and-play</u> or <u>zeroconf</u>
+
+![image-20221103194549576](assets/image-20221103194549576.png)
+
+###### DHCP 4 step proccess for new clients
+
+1. **DHCP server discovery** - using a DHCP discover message, which a client sends within a UDP packet to port 67. The UDP packet is encapsulated in an IP datagram.
+2. **DHCP server offer(s)** - A DHCP server receiving a DHCP discover message responds to the client with a DHCP offer message that is broadcast to all nodes on the subnet, again using the IP broadcast address of 255.255.255.255. Each server offer message contains the transaction ID of the received discover message, the proposed IP address for the client, the network mask, and an IP address lease time—the amount of time for which the IP address will be valid.
+3. **DHCP request** - The newly arriving client will choose from among one or more server offers and respond to its selected offer with a DHCP request message, echoing back the configuration parameters.
+4. **DHCP ACK** - The server responds to the DHCP request message with a DHCP ACK message, confirming the requested parameters.
+
+![image-20221103195038126](assets/image-20221103195038126.png)
+
+#### 4.3.3 - Network Address Translation (NAT) 
+
+##### Internal vs External Network IPs
+
+![image-20221103195408552](assets/image-20221103195408552.png)
+
+The NAT-enabled router does not look like a router to the outside world. Instead the NAT router behaves to the outside world as a single device with a single IP address.
+
+> **NAT translation table**
+>
+> Contains all internal IPs and Ports than an external datagram can transmit to. Basically port forwarding.
+
+##### Downsides of NAT
+
+- Port numbers being used to address processes vs addressing hosts.
+- Routers were meant to stay in network layer and NAT violates this principal.
+
+#### 4.3.4 - IPv6
+
+In the early 1990s, the Internet Engineering Task Force began an effort to develop a successor to the IPv4 protocol. A prime motivation for this effort was the realization that the 32-bit IPv4 address space was beginning to be used up, with new subnets and IP nodes being attached to the Internet (and being allocated unique IP addresses) at a breathtaking rate.
+
+Upgrades to the IPv4 protocol was implemented as well.
+
+##### IPv6 Datagram Format
+
+![image-20221103200245283](assets/image-20221103200245283.png)
+
+**New upgrades included the following:**
+
+- **Expanded addressing capabilities** - IPv6 increases the size of the IP address from 32 to 128 bits. This ensures that the world won’t run out of IP addresses. Now, every grain of sand on the planet can be IP-addressable.
+- **A streamlined 40-byte header** - A number of IPv4 fields have been dropped or made optional. The resulting 40-byte fixed-length header allows for faster processing of the IP datagram by a router. A new encoding of options allows for more flexible options processing.
+- **Flow labeling** - This allows “labeling of packets belonging to particular flows for which the sender requests special handling, such as a non-default quality of service or real-time service.”. Designers of IPv6 foresaw the eventual need to be able to differentiate among the flows, even if the exact meaning of a flow had yet to be determined.
+- **Next header** - This field identifies the protocol to which the contents (data field) of this datagram will be delivered (for example, to TCP or UDP). The field uses the same values as the protocol field in the IPv4 header.
+- **Hop limit** - The contents of this field are decremented by one by each router that forwards the datagram. If the hop limit count reaches zero, a router must discard that datagram.
+- **Source and destination addresses** - IPv6 addresses.
+- **Data** - This is the payload portion of the IPv6 datagram. When the datagram reaches its destination, the payload will be removed from the IP datagram and passed on to the protocol specified in the next header field.
+
+**Fields now removed from the IPv6 protocol that were in the IPv4 protocol:**
+
+- **Fragmentation/reassembly** - IPv6 does not allow for fragmentation and reassembly at intermediate routers; these operations can be performed only by the source and destination. If an IPv6 datagram received by a router is too large to be forwarded over the outgoing link, the router simply drops the datagram and sends a “Packet Too Big” ICMP error message back to the sender. The sender can then resend the data, using a smaller IP datagram size. Fragmentation and reassembly is a time-consuming operation; removing this functionality from the routers and placing it squarely in the end systems considerably speeds up IP forwarding within the network.
+- **Header checksum** - This functionality was sufficiently redundant in the network layer that it could be removed.
+- **Options** - An options field is no longer a part of the standard IP header. The options field is one of the possible next headers pointed to from within the IPv6 header. That is, just as TCP or UDP protocol headers can be the next header within an IP packet, so too can an options field. The removal of the options field results in a fixed-length, 40-byte IP header.
+
+##### Transitioning to IPv6 from IPv4
+
+Right now the process uses tunneling. Placing the IPv4 packet within the IPv6 and sending it to its destination.
+
+![image-20221103201417639](assets/image-20221103201417639.png)
 
  # Chapter 5 - The Network Layer: Control Plane (Routing)
 
 ## 5.1 - Introduction
 
+**Two possible approaches for routing:**
+
+> **Per-router control** 
+>
+> A routing algorithm runs in each and every router; both a forwarding and a routing function are contained within each router. Each router has a routing component that communicates with the routing components in other routers to compute the values for its forwarding table. 
+>
+> ![image-20221103201633100](assets/image-20221103201633100.png)
+
+> **Logically centralized control** 
+>
+> Computes and distributes the forwarding tables to be used by each and every router. the routing control service is accessed as if it were a single central service point, even though the service is likely to be implemented via multiple servers for fault-tolerance, and performance scalability reasons.
+>
+> ![image-20221103201932364](assets/image-20221103201932364.png)
+
+
+
 ## 5.2 - routing Algorithms 
+
+goal is to determine good paths (equivalently, routes), from senders to receivers, through the network of routers. Typically, a “good” path is one that has the least cost.
+
+we can classify routing algorithms is according to whether they are centralized or decentralized: 
+
+> **Centralized routing algorithms**
+>
+> computes the least-cost path between a source and destination using complete, global knowledge about the network. This then requires that the algorithm somehow obtain this information before actually performing the calculation.
+>
+> Algorithms with global state information are often referred to as <u>link-state (LS) algorithms</u>, since the algorithm must be aware of the cost of each link in the network.
+
+> **Decentralized routing algorithms**
+>
+> The calculation of the least-cost path is carried out in an iterative, distributed manner by the routers. No node has complete information about the costs of all network links. Each node begins with only the knowledge of the costs of its own directly attached links. 
+>
+> The decentralized routing algorithm is called a <u>distance-vector (DV) algorithm</u>, because each node maintains a vector of estimates of the costs (distances) to all other nodes in the network. 
+>
+> Such decentralized algorithms, with interactive message exchange between neighboring routers is perhaps more naturally suited to control planes where the routers interact directly with each other
 
 #### 5.2.1 The Link-State (LS) Routing Algorithm 
 
