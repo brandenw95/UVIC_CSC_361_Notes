@@ -1250,7 +1250,7 @@ If one of the bits is a 0, then we know that errors have been introduced into th
 
 #### Error and Delay solutions
 
-##### **Sender Timer**
+##### Sender Timer
 
 - start a timer when sending out a packet
   - In reality: one timer per a window of packets
@@ -1846,6 +1846,8 @@ Goal of the Network Layer: to move packets from sending host to the receiving ho
 >
 > The network-wide process that determines the end-to-end paths that packets take from source to destination. 
 
+![image-20221103215420071](assets/image-20221103215420071.png)
+
 ##### Control Plane: The traditional approach 
 
 ![image-20221103162656659](assets/image-20221103162656659.png)
@@ -2048,6 +2050,8 @@ Right now the process uses tunneling. Placing the IPv4 packet within the IPv6 an
 
 ## 5.1 - Introduction
 
+![image-20221103215538821](assets/image-20221103215538821.png)
+
 **Two possible approaches for routing:**
 
 > **Per-router control** 
@@ -2084,15 +2088,146 @@ we can classify routing algorithms is according to whether they are centralized 
 >
 > Such decentralized algorithms, with interactive message exchange between neighboring routers is perhaps more naturally suited to control planes where the routers interact directly with each other
 
-#### 5.2.1 The Link-State (LS) Routing Algorithm 
+##### A Comparison of LS and DV Routing Algorithms
 
-#### 5.2.2 The Distance-Vector (DV) Routing Algorithm
+The DV and LS algorithms take complementary approaches toward computing routing.
+
+![image-20221103220137749](assets/image-20221103220137749.png)
+
+###### DV Algorithm
+
+Each node talks to only its directly connected neighbors, but it provides its neighbors with least-cost estimates from itself to all the nodes (that it knows about) in the network.
+
+| Speed  | Robustness                                                   |
+| ------ | ------------------------------------------------------------ |
+| O(n^2) | a node can advertise incorrect least-cost paths to any or all destinations. (Indeed, in 1997, a malfunctioning router in a small ISP provided national backbone routers with erroneous routing information. This caused other routers to flood the malfunctioning router with traffic and caused large portions of the Internet to become disconnected for up to several hours |
+
+###### LS Algorithm
+
+The LS algorithm requires global information.
+
+| Speed  | Robustness                                                   |
+| ------ | ------------------------------------------------------------ |
+| O(M+N) | router could broadcast an incorrect cost for one of its attached links (but no others). A node could also corrupt or drop any packets it received as part of an LS broadcast. But an LS node is computing only its own forwarding tables; other nodes are performing similar calculations for themselves. This means route calculations are somewhat separated under LS, providing a degree of robustness. |
 
 
 
+#### 5.2.1 The Link-State (LS) Routing Algorithm (Dijkstra's Algorithm)
+
+The network topology and all link costs are known, that is, available as input to the LS algorithm. This is accomplished by having each node broadcast link-state packets to all other nodes in the network, with each link-state packet containing the identities and costs of its attached links. This is often accomplished by a link-state broadcast algorithm.
+
+![image-20221103220037790](assets/image-20221103220037790.png)
+
+> Definitions for the following notation:
+>
+> - ***D(v):*** cost of the least-cost path from the source node to destination v as of this iteration of the algorithm.
+> - ***p(v):*** previous node (neighbor of v) along the current least-cost path from the source to v.
+> - ***N′:*** subset of nodes; v is in N′ if the least-cost path from the source to v is definitively known.
+
+> Worst Case: O(n^2)
+
+```pseudocode
+1 	Initialization: 
+2 	N’ = {u} 
+3	for all nodes v 
+4		if v is a neighbor of u
+5 			then D(v) = c(u,v) 
+6		else D(v) = ∞
+7 
+8	Loop 
+9 		find w not in N’ such that D(w) is a minimum 
+10 		add w to N’ 
+11 		update D(v) for each neighbor v of w and not in N’: 
+12			D(v) = min(D(v), D(w)+ c(w,v) )
+13 		/* new cost to v is either old cost to v or*/ 
+14 		/*known least path cost to w plus cost from w to v */
+15	until N’= N
+```
+
+![image-20221103210859896](assets/image-20221103214154828.png)
+
+![image-20221103220105757](assets/image-20221103220105757.png)
+
+![image-20221103210842177](assets/image-20221103210842177.png)
+
+![image-20221103210954616](assets/image-20221103210954616.png)
+
+Route loads are not symmetric, thus a clockwise traversal will be different than a counter clockwise traversal. This creates congestion.
+
+![image-20221103211245041](assets/image-20221103211245041.png)
+
+##### Solutions to congestion caused by oscillations
+
+to ensure that not all routers run the LS algorithm at the same time. This seems a more reasonable solution, since we would hope that even if routers ran the LS algorithm with the same periodicity, the execution instance of the algorithm would not be the same at each node.
+
+Routers in the wild are known to "self-synchronize" amongst themselves.
+
+#### 5.2.2 The Distance-Vector (DV) Routing Algorithm (Bellman-Ford Algorithm)
+
+Whereas the LS algorithm is an algorithm using global information, the distance vector (DV) algorithm is iterative, asynchronous, and distributed. It is distributed in that each node receives some information from one or more of its directly attached neighbors, performs a calculation, and then distributes the results of its calculation back to its neighbors.
+
+The algorithm is <u>asynchronous</u> , thus self terminates without a stop event.
+
+![image-20221103215640424](assets/image-20221103215640424.png)
+
+The shortest distance can be related via Bellman-Ford algorithm:
+$$
+d_x (y) = min_v\{c(x,v)+d_v(y)\}
+$$
+
+```pseudocode
+1	Initialization: 
+2	for all destinations y in N:
+3 		Dx(y)= c(x,y)/* if y is not a neighbor then c(x,y)= ∞ */ 
+4 	for each neighbor w
+5 	Dw(y) = ? for all destinations y in N 
+6 	for each neighbor w
+7 	send distance vector Dx = [Dx(y): y in N] to w
+8 
+9	loop 
+10 		wait (until I see a link cost change to some neighbor w or 
+11		until I receive a distance vector from some neighbor w) 
+12 
+13	for each y in N: Dx(y) = minv{c(x,v) + Dv(y)}
+14	Dx(y) = minv{c(x,v) + Dv(y)}
+15 
+16	if Dx(y) changed for any destination y 
+17	send distance vector Dx = [Dx(y): y in N] to all neighbors
+18 
+19	forever
+```
+
+![image-20221103214359362](assets/image-20221103214359362.png)
+
+![image-20221103214429805](assets/image-20221103214429805.png)
+
+![image-20221103215713255](assets/image-20221103215713255.png)
+
+For example, node x sends its distance vector Dx = [0, 2, 7] to both nodes y and z. After receiving the updates, each node recomputes its own distance vector. For example, node x computes:
+
+![image-20221103212907475](assets/image-20221103212907475.png)
+
+![image-20221103212926768](assets/image-20221103212926768.png)
+
+##### DV Algorithm: Link-Cost changes and Link Failure
+
+**The DV algorithm causes the following sequence of events to occur:**
+
+- **At time t0** - y detects the link-cost change (the cost has changed from 4 to 1), updates its distance vector, and informs its neighbors of this change since its distance vector has changed.
+- **At time t1** - z receives the update from y and updates its table. It computes a new least cost to x (it has decreased from a cost of 5 to a cost of 2) and sends its new distance vector to its neighbors.
+- **At time t2** - y receives z’s update and updates its distance table. y’s least costs do not change and hence y does not send any message to z. The algorithm comes to a quiescent state.
+
+##### Count-to-infinity
+
+> **Problem**
+>
+> ![image-20221103215850952](assets/image-20221103215850952.png)
+
+> **Solutions**
+>
+> ![image-20221103220001647](assets/image-20221103220001647.png)
 
 
-> **Note:** End of Midterm two material.
 
 ## 5.3 - Intra-AS Routing in the Internet: OSPF
 
