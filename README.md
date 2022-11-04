@@ -1369,7 +1369,7 @@ $$
 
 - The range of sequence numbers must be increased, since each in-transit packet (not counting retransmissions) must have a unique sequence number and there may be multiple, in-transit, unacknowledged packets.
 - The sender and receiver sides of the protocols may have to buffer more than one packet.
-- The range of sequence numbers needed and the buffering requirements will depend on the manner in which a data transfer protocol responds to lost, corrupted, and overly delayed packets.
+-  The range of sequence numbers needed and the buffering requirements will depend on the manner in which a data transfer protocol responds to lost, corrupted, and overly delayed packets.
 
 Two basic approaches toward pipelined error recovery can be identified: **Go-Back-N** and **selective repeat**.
 
