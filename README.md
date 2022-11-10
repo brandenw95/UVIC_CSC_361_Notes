@@ -2231,23 +2231,289 @@ For example, node x sends its distance vector Dx = [0, 2, 7] to both nodes y and
 
 ## 5.3 - Intra-AS Routing in the Internet: OSPF
 
+set of routers all executing the same routing algorithm is simplistic for two important reasons:
+
+- **Scale** - As the number of routers becomes large, the overhead involved in communicating, computing, and storing routing information becomes prohibitive. A distance-vector algorithm that iterated among such a large number of routers would never converge.
+- **Administrative Autonomy** - An ISP generally desires to operate its network as it pleases and an organization should be able to operate and administer its network as it wishes, while still being able to connect its network to other outside networks.
+
+> **Intra-autonomous system routing protocol**
+>
+> The routing algorithm running within an autonomous system 
+
+##### Open Shortest Path First (OSPF)
+
+> **Intermediate System - Intermediate System (IS - IS)**
+>
+> the IS-IS protocol is one of a family of IP Routing protocols
+
+OSPF is a link-state protocol that uses flooding of link-state information
+and a Dijkstra’s least-cost path algorithm.
+
+With OSPF, each router constructs a complete topological graph of the entire autonomous system. Each router then locally runs Dijkstra’s shortest-path algorithm to determine a shortest-path tree to all subnets, with itself as the root node.
+
+**The configuration is the administrators decision:**
+
+- Might choose to set all link costs to 1, thus achieving minimum-hop routing.
+- Might choose to set the link weights to be inversely proportional to link capacity in order to discourage traffic from using low-bandwidth links
+
+With OSPF, a router broadcasts routing information to all other routers in the autonomous system, not just to its neighboring routers. A router broadcasts link-state information whenever there is a change in a link’s state (Or every 30 mins).
+
+> **MOSPF**
+>
+> Multicast Open Shortest Path First
+
+**Some of the advances include the following:**
+
+- **security -** Exchanges between OSPF routers can be authenticated. With authentication, only trusted routers can participate in the OSPF protocol within an AS, thus preventing malicious intruders.
+- **Multiple same-cost paths -** OSPF allows multiple paths to be used, singe path is not needed.
+- **Integrated support for unicast and multicast routing -** MOSPF provides simple extensions to OSPF to provide for multicast routing. MOSPF uses the existing OSPF link database and adds a new type of link-state advertisement to the existing OSPF link-state broadcast mechanism.
+- **Support for hierarchy within a single Autonomous system -** OSPF autonomous system can be configured hierarchically into areas. Each area runs its own OSPF link-state routing algorithm, with each router in an area broadcasting its link state to all other routers in that area.
+
 ## 5.4 - Routing Among the ISPs: BGP
+
+> **Border Gateway Protocol**
+>
+> Since an inter-AS routing protocol involves coordination among multiple ASs, communicating ASs must run the same inter-AS routing protocol. In fact, in the Internet, all ASs run the same inter-AS routing protocol
+>
+> *TL;DR*: Routing protocol standardizing what algorithm to use between autonomous systems.
 
 #### 5.4.1 The Role of BGP
 
+Routing tables determine the rules inside an Intra-Autonomous System but not outside of it. Another standard applies: BGP
+
+In BGP, packets are not routed to a specific destination address, but instead to CIDRized prefixes, with each prefix representing a subnet or a collection of subnets.
+
+**Goals of BGP:**
+
+- **Obtain prefix reachability information from neighboring ASs** - 
+- **Determine the “best” routes to the prefixes.** -  A router may learn about two or more different routes to a specific prefix. To determine the best route, the router will locally run a BGP route-selection procedure.
+
+
+
 #### 5.4.2 Advertising BGP Route Information 
+
+![image-20221109185328711](assets/image-20221109185328711.png)
+
+For each AS, each router is either a gateway router or an internal router.
+
+> **Gateway Router**
+>
+> a router on the edge of an AS that directly connects to one or more routers in other AS's.
+>
+> ex. 1C, 2A, 2C, 3A
+
+> **Internal Router**
+>
+> connects only to hosts and routers within its own AS.
+>
+> ex. all others
+
+##### BGP connections
+
+Established over semi-permanent TCP usually over port 179
+
+> **External/ Internal BGP (eBGP/iBGP)**
+>
+> - **eBGP** - Two connections from routers spanning over two Autonomous systems.
+> - **iBGP** - Internal router connections
+
+![image-20221109190445538](assets/image-20221109190445538.png)
 
 #### 5.4.3 Determining the Best Routes 
 
+> **BGP attributes**
+>
+> When a router advertises a prefix across a BGP connection with several prefixes.
+
+> **Route** 
+>
+> Combined Prefix <u>AND</u> attributes
+
+**Two of the most important attributes:**
+
+- **AS-PATH** - contains the list of ASs through which the advertisement has passed.
+- **NEXT-HOP** - is the IP address of the router interface that begins the AS-PATH.
+
+**AS-PATH Loops** - If a router sees that its own AS is contained in the path list, it will reject the advertisement because it will become a looping path.
+
+![image-20221109191655727](assets/image-20221109191655727.png)
+
+![image-20221109191730642](assets/image-20221109191730642.png)
+
+Format of attributes for BGP route: **NEXT-HOP**; **AS-PATH**;**Destination Prefix (x)**
+
+##### Hot Potato Routing
+
+>  **Hot Potato Routing**
+>
+> Name for a simple algorithm that provides BGP routing.
+
+**When adding an outside-AS prefix into a forwarding table these are used:**
+
+-  inter-AS routing protocol (BGP) 
+- intra-AS routing protocol (e.g., OSPF)
+
+The idea behind hot-potato routing is for router 1b to get packets out of its
+AS as quickly as possible (more specifically, with the least cost possible) without worrying about the cost of the remaining portions of the path outside of its AS to the destination.
+
+###### Algorithm steps:
+
+1. Learn from inter-AS protocol that subnet x is reachable via multiple gateways.
+2. Use routing info from intra-AS protocol to determine costs of least-cost paths to each of the gateways.
+3. Hot potato routing: Choose the gateway that has the
+   smallest least cost.
+4. Determine from forwarding table the interface I that leads to least-cost gateway. Enter (x,I) in forwarding table.
+
+###### Summery of the "Hot Potato Algorithm
+
+- Selfish algorithm - it tries to reduce the cost in its own AS while ignoring the other components of the end-to-end costs outside its AS. 
+- Many different paths can be achieved.
+
+##### Route-Selection Algorithm 
+
+Uses a more complex algorithm but incorporates the Hot Potato Algorithm when needed.
+
+> **Local Prefix**
+>
+> The value of the local preference attribute is a policy decision that is left entirely up to the AS’s network administrator. 
+
+If there are two or more routes to the same prefix, then BGP sequentially invokes the following elimination rules until one route remains
+
+###### Algorithm Steps:
+
+1. A route is assigned a local preference value as one of its attributes (in addition to the AS-PATH and NEXT-HOP attributes). The routes with the <u>highest local preference values are selected</u>.
+2. From the remaining routes (all with the same highest local preference value), the route with the shortest AS-PATH is selected. If this rule were the only rule for route selection, then <u>BGP would be using a DV algorithm for path determination</u>, where the distance metric uses the number of AS hops rather than the number of router hops.
+3. From the remaining routes (all with the same highest local preference value and the same AS-PATH length), <u>hot potato routing is used</u>, that is, the route with the closest NEXT-HOP router is selected.
+4. If more than one route still remains, the router <u>uses BGP identifiers</u> to select the route.
+
 #### 5.4.4 IP-Anycast
+
+> **IP-Anycast**
+>
+> is commonly used in DNS. 
+>
+> **Applications such as:** 
+>
+> - replicating the same content on different servers in many different dispersed geographical locations
+> - having each user access the content from the server that is closest.
+>
+> Ex. a CDN may replicate videos and other objects on servers in different countries.
+
+![image-20221109193638027](assets/image-20221109193638027.png)
 
 #### 5.4.5 Routing Policy 
 
+When a router selects a route to a destination, the AS routing policy can trump all other considerations, such as shortest AS path or hot potato routing.
+
+In the route-selection algorithm routes are first selected according to the local-preference attribute, whose value is fixed by the policy of the local AS.
+
+![image-20221109193925694](assets/image-20221109193925694.png)
+
+- **X** - <u>Multi-homed</u> Access ISP
+- **A,B,C** - Provider Networks 
+- **W, Y, X** - Access ISP
+
 #### 5.4.6 Putting the Pieces Together: Obtaining Internet Presence
+
+Putting these into practice:
+
+- IP addressing
+- DNS
+- BGP
+
+
 
 ## 5.6 - ICMP: The Internet Control Message Protocol
 
-## 5.8 - Summary
+Used by hosts and routers to communicate network-layer information to each other. The most typical case for ICMP is error reporting. That router created and sent an ICMP message to your host indicating the error. 
+
+ICMP is often considered part of IP, but architecturally it lies just above IP, as
+ICMP messages are carried inside IP datagrams. That is, ICMP messages are carried as IP payload, just as TCP or UDP segments are carried as IP payload.
+
+ICMP messages have a type and a code field, and contain the header and the first 8 bytes of the IP datagram that caused the ICMP message to be generated in the first place.
+
+Another interesting ICMP message is the source quench message. This message is seldom used in practice. Its original purpose was to perform congestion control—to allow a congested router to send an ICMP source quench message to a host to force that host to reduce its transmission rate.
+
+#### **ICMP Code table:**
+
+| ICMP Type | Code | Description                        |
+| --------- | ---- | ---------------------------------- |
+| 0         | 0    | echo reply (to ping)               |
+| 3         | 0    | destination network unreachable    |
+| 3         | 1    | destination host unreachable       |
+| 3         | 2    | destination protocol unreachable   |
+| 3         | 3    | destination port unreachable       |
+| 3         | 6    | destination network unknown        |
+| 3         | 7    | destination host unknown           |
+| 4         | 0    | source quench (congestion control) |
+| 8         | 0    | echo request                       |
+| 9         | 0    | router advertisement               |
+| 10        | 0    | router discovery                   |
+| 11        | 0    | TTL expired                        |
+| 12        | 0    | IP header bad                      |
+
+#### How does a Traceroute source know when to stop sending UDP segments?
+
+The destination host sends a port unreachable ICMP message (type 3 code 3) back to the source. When the source host receives this particular ICMP message, it knows it does not need to send additional probe packets.
+
+#### ICMPv6
+
+ICMPv6 also added new types and codes required by the new IPv6 functionality. These include the “Packet Too Big” type and an “unrecognized IPv6 options” error code.
 
 # Chapter 6 - The Link Layer and LANs
 
+## 6.1 - Introduction to the Link Layer
+
+#### 6.1.1 - The Services Provided by the Link Layer 
+
+#### 6.1.2 - Where Is the Link Layer Implemented?
+
+## 6.2 - Error-Detection and -Correction Techniques
+
+#### 6.2.1 - Parity Checks
+
+#### 6.2.2 - Check summing Methods 6.3
+
+#### 6.2.3 - Cyclic Redundancy Check (CRC)
+
+## 6.3 - Multiple Access Links and Protocols
+
+#### 6.3.1 - Channel Partitioning Protocols 
+
+#### 6.3.2 - Random Access Protocols 
+
+#### 6.3.3 - Taking-Turns Protocols
+
+## 6.4 - Switched Local Area Networks
+
+#### 6.4.1 - Link-Layer Addressing and ARP 
+
+#### 6.4.2 - Ethernet 
+
+#### 6.4.3 - Link-Layer Switches
+
+## 6.7 - Retrospective: A Day in the Life of a Web Page Request
+
+#### 6.7.1 - Getting Started: DHCP, UDP, IP, and Ethernet 
+
+#### 6.7.2 - Still Getting Started: DNS and ARP
+
+#### 6.7.3 - Still Getting Started: Intra-Domain Routing to the DNS Server 
+
+#### 6.7.4 - Web Client-Server Interaction: TCP and HTTP
+
+# Chapter 7 - Wireless and Mobile Networks
+
+## 7.1 - Introduction
+
+## 7.2 - Wireless Links and Network Characteristics
+
+#### 7.2.1 - CDMA
+
+## 7.3 - WiFi: 802.11 Wireless LANs
+
+#### 7.3.1 - The 802.11 Architecture 
+
+#### 7.3.2 - The 802.11 MAC Protocol 
+
+#### 7.3.3 - The IEEE 802.11 Frame
