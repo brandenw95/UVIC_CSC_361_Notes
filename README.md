@@ -6,8 +6,6 @@
 
 
 
-# TOC
-
 - [Class Intro](#class-intro)
 
   * [Content](#content)
