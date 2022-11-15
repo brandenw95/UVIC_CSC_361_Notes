@@ -1,10 +1,8 @@
-# (CSC 361) - Computer Networks - Complete Notes
+# (CSC 361) - Computer Networks - Complete Notes - Fall 2022
 
 
 
 [TOC]
-
-
 
 - [Class Intro](#class-intro)
 
