@@ -280,6 +280,12 @@
 - Network layers: IP addressing and routing
 - link layers: logical link, media access
 
+## Lecture Slides
+
+[Lecture 0]: assets/lecture
+
+
+
 ## Course evaluation
 
 - one written assignment (5%)
