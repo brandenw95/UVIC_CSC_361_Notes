@@ -282,7 +282,7 @@
 
 ## Lecture Slides
 
-[Lecture 0]: "assets/lecture0.pdf"
+[Lecture 1](assets/lecture0.pdf)
 
 
 
