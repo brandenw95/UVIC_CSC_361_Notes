@@ -2465,6 +2465,8 @@ For example, node x sends its distance vector Dx = [0, 2, 7] to both nodes y and
 - **At time t1** - z receives the update from y and updates its table. It computes a new least cost to x (it has decreased from a cost of 5 to a cost of 2) and sends its new distance vector to its neighbors.
 - **At time t2** - y receives z’s update and updates its distance table. y’s least costs do not change and hence y does not send any message to z. The algorithm comes to a quiescent state.
 
+![image-20221115181825923](assets/image-20221115181825923.png)
+
 ##### Count-to-infinity
 
 > **Problem**
@@ -2488,6 +2490,27 @@ set of routers all executing the same routing algorithm is simplistic for two im
 >
 > The routing algorithm running within an autonomous system 
 
+##### Routing Information Protocol (RIP) 
+
+- Uses the Distance vector algorithm
+- Based on UDP Protocol
+- Included in BSD-UNIX Distribution in 1982
+- Distance metric: # of hops (max = 15 hops)
+  - Pros: Limits possible loops
+  - Cons: Limits traffic that requires more than 15 hops
+
+###### Routing Information Protocol Advertisements 
+
+Distance vectors: exchanged among neighbors every 30 sec via RIP Response Message (also called advertisement). Each advertisement: list of up to 25 destination subnets within AS.
+
+- Uses UDP Port 520 (/etc/services)
+- Newer Implementations use TCP
+- Uses HOPS to indicate the metric
+
+![image-20221115181723936](assets/image-20221115181723936.png)
+
+![image-20221115181743633](assets/image-20221115181743633.png)
+
 ##### Open Shortest Path First (OSPF)
 
 > **Intermediate System - Intermediate System (IS - IS)**
@@ -2506,6 +2529,24 @@ With OSPF, each router constructs a complete topological graph of the entire aut
 
 With OSPF, a router broadcasts routing information to all other routers in the autonomous system, not just to its neighboring routers. A router broadcasts link-state information whenever there is a change in a link’s state (Or every 30 mins).
 
+![image-20221115181947417](assets/image-20221115181947417.png)
+
+###### OSPF Messages
+
+| Message Type           | Description                                  |
+| ---------------------- | -------------------------------------------- |
+| Hello                  | Used to discover who the neighbors are.      |
+| Link State Update      | Provides the sender's cost to its neighbors. |
+| Link State Ack         | Acknowledges link state update.              |
+| Link state Description | Announces which updates the sender has.      |
+| Link State Request     | Requests information from the partner.       |
+
+###### Hierarchical OSPF
+
+![image-20221115182349637](assets/image-20221115182349637.png)
+
+![image-20221115182537868](assets/image-20221115182537868.png)
+
 > **MOSPF**
 >
 > Multicast Open Shortest Path First
@@ -2519,9 +2560,15 @@ With OSPF, a router broadcasts routing information to all other routers in the a
 
 ![image-20221115165753097](assets/image-20221115165753097.png)
 
+> **Example:** 
+>
+> ![image-20221115172011875](assets/image-20221115172011875.png)
+
 ## 5.4 - Routing Among the ISPs: BGP
 
 > **Border Gateway Protocol**
+>
+> The de facto exterior gateway protocol (version 4).
 >
 > Since an inter-AS routing protocol involves coordination among multiple ASs, communicating ASs must run the same inter-AS routing protocol. In fact, in the Internet, all ASs run the same inter-AS routing protocol
 >
@@ -2535,10 +2582,10 @@ In BGP, packets are not routed to a specific destination address, but instead to
 
 **Goals of BGP:**
 
-- **Obtain prefix reachability information from neighboring ASs** - 
+- **Obtain prefix reachability information from neighboring ASs** 
 - **Determine the “best” routes to the prefixes.** -  A router may learn about two or more different routes to a specific prefix. To determine the best route, the router will locally run a BGP route-selection procedure.
-
-
+- **Propagate the reachability info to all routers <u>internal</u> to AS**
+- **Allows a subnet to advertise its existence.**
 
 #### 5.4.2 Advertising BGP Route Information 
 
@@ -2569,6 +2616,8 @@ Established over semi-permanent TCP usually over port 179
 
 ![image-20221109190445538](assets/image-20221109190445538.png)
 
+![image-20221115182915061](assets/image-20221115182915061.png)
+
 #### 5.4.3 Determining the Best Routes 
 
 > **BGP attributes**
@@ -2584,6 +2633,8 @@ Established over semi-permanent TCP usually over port 179
 - **AS-PATH** - contains the list of ASs through which the advertisement has passed.
 - **NEXT-HOP** - is the IP address of the router interface that begins the AS-PATH.
 
+When gateway router receives route advert, uses import routing policy to accept/decline.
+
 **AS-PATH Loops** - If a router sees that its own AS is contained in the path list, it will reject the advertisement because it will become a looping path.
 
 ![image-20221109191655727](assets/image-20221109191655727.png)
@@ -2591,6 +2642,17 @@ Established over semi-permanent TCP usually over port 179
 ![image-20221109191730642](assets/image-20221109191730642.png)
 
 Format of attributes for BGP route: **NEXT-HOP**; **AS-PATH**;**Destination Prefix (x)**
+
+##### BGP Messages
+
+| Message      | Description                                                  |
+| ------------ | ------------------------------------------------------------ |
+| OPEN         | opens TCP connection to peer and authenticates sender        |
+| UPDATE       | advertises new path (or withdraws old)                       |
+| KEEPALIVE    | keeps connection alive in absence of UPDATES; also ACKs OPEN request |
+| NOTIFICATION | reports errors in previous msg; also used to close connection |
+
+
 
 ##### Hot Potato Routing
 
@@ -2636,6 +2698,8 @@ If there are two or more routes to the same prefix, then BGP sequentially invoke
 3. From the remaining routes (all with the same highest local preference value and the same AS-PATH length), <u>hot potato routing is used</u>, that is, the route with the closest NEXT-HOP router is selected.
 4. If more than one route still remains, the router <u>uses BGP identifiers</u> to select the route.
 
+![image-20221115183221751](assets/image-20221115183221751.png)
+
 #### 5.4.4 IP-Anycast
 
 > **IP-Anycast**
@@ -2671,7 +2735,11 @@ Putting these into practice:
 - DNS
 - BGP
 
+![image-20221115183243600](assets/image-20221115183243600.png)
 
+##### Summery 
+
+![image-20221115183315604](assets/image-20221115183315604.png)
 
 ## 5.6 - ICMP: The Internet Control Message Protocol
 
