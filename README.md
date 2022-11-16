@@ -415,7 +415,7 @@ ANS:2 RTTs for index, 1 for both small and huge, and 2 RTTs for big on x.y.com (
 
 # Chapter 1 - Computer Networks and the Internet
 
-![image-20221006171245818](image-20221006171245818.png)
+![image-20221006171245818](assets/image-20221006171245818.png)
 
 End systems are made up of: 
 
@@ -440,7 +440,7 @@ These can consist of variable speeds depending on the link used, each one can ef
 
 ## 1.1.3 - What is a protocol
 
-![image-20221006172253314](image-20221006172253314.png)
+![image-20221006172253314](assets/image-20221006172253314.png)
 
 > **Protocol**
 >
@@ -572,7 +572,7 @@ Wireless Cable form building to building
 - LMDS: 1.3GHz@28~31GHz - (range: 2~5km, line-of-sight! / wireless DSL: 36Gbps downstream 1Mbps up/sector)
 - IEEE 802.16: WiMax - (10~66GHz (802.16a: 2-11GHz NLOS), OFDM)
 
-![image-20221006190208964](image-20221006190208964.png)
+![image-20221006190208964](assets/image-20221006190208964.png)
 
 #### Internet access: Wireless *AN
 
@@ -634,7 +634,7 @@ Now let’s calculate the amount of time that elapses from when the source begin
 
 Each packet switch has multiple links attached to it. For each attached link, the packet switch has an output buffer (also called an output queue). Thus, in addition to the store-and-forward delays, packets suffer output buffer queuing delays.
 
-![image-20221006175705051](image-20221006175705051.png)
+![image-20221006175705051](assets/image-20221006175705051.png)
 
 Buffer space is **finite** thus packet loss will occur—either the arriving packet or one of the already-queued packets will be dropped.
 
@@ -657,14 +657,14 @@ There are two fundamental approaches to moving data through a network of links a
 >
 > The frequency spectrum of a link is divided up among the connections established across the link. Specifically, the link dedicates a frequency band to each connection for the duration of the connection.
 >
-> ![image-20221006180516515](image-20221006180516515.png)
+> ![image-20221006180516515](assets/image-20221006180516515.png)
 
 > **time-division multiplexing (TDM)**
 >
 > Time is divided into frames of fixed duration, and each frame is
 > divided into a fixed number of time slots. When the network establishes a connection across a link, the network dedicates one time slot in every frame to this connection.
 >
-> ![image-20221006180538853](image-20221006180538853.png)
+> ![image-20221006180538853](assets/image-20221006180538853.png)
 
 Proponents of packet switching have always argued that circuit switching is wasteful because the dedicated circuits are idle during silent periods.
 
@@ -699,7 +699,7 @@ Hierarchy:
 - Regional ISPs (explornet, Pris)
 - Access ISPs (Local businesses that connect to either regional or Tier 1)
 
-![image-20221006182302406](image-20221006182302406.png)
+![image-20221006182302406](assets/image-20221006182302406.png)
 
 ## 1.3.1 Multiplexing Technologies
 
@@ -707,13 +707,13 @@ Hierarchy:
 
 Used by fiber to segment the signals into sections to be sent down the same line.
 
-![image-20221006191225459](image-20221006191225459.png)
+![image-20221006191225459](assets/image-20221006191225459.png)
 
 #### Wavelength division multiplexing
 
 a technology which [multiplexes](https://en.wikipedia.org/wiki/Multiplexing) a number of [optical carrier](https://en.wikipedia.org/wiki/Optical_carrier) signals onto a single [optical fiber](https://en.wikipedia.org/wiki/Optical_fiber) by using different [wavelengths](https://en.wikipedia.org/wiki/Wavelength) (i.e., colors) of [laser](https://en.wikipedia.org/wiki/Laser) [light](https://en.wikipedia.org/wiki/Light).[[1\]](https://en.wikipedia.org/wiki/Wavelength-division_multiplexing#cite_note-:0-1)This technique enables [bidirectional](https://en.wikipedia.org/wiki/Duplex_(telecommunications)) communications over a single strand of fiber, also called **wavelength-division duplexing**, as well as multiplication of capacity.[[1\]](https://en.wikipedia.org/wiki/Wavelength-division_multiplexing#cite_note-:0-1)
 
-![image-20221006191322867](image-20221006191322867.png)
+![image-20221006191322867](assets/image-20221006191322867.png)
 $$
 Frequency * Wavelength = Signal(Speed)
 $$
@@ -722,11 +722,11 @@ $$
 
 is a method of transmitting and receiving independent signals over a common signal path by means of synchronized switches at each end of the transmission line so that each signal appears on the line only a fraction of time in an alternating pattern. This method transmits two or more digital signals or analog signals over a common channel.
 
-![image-20221006191824084](image-20221006191824084.png)
+![image-20221006191824084](assets/image-20221006191824084.png)
 
 #### Communication satellite
 
-![image-20221006192031173](image-20221006192031173.png)
+![image-20221006192031173](assets/image-20221006192031173.png)
 
 ## 1.4 Packet Delay
 
@@ -779,7 +779,7 @@ As these packets work their way toward the destination, they pass through a seri
 suppose there are N - 1 routers between the source and the
 destination. Then the source will send N special packets into the network, with each packet addressed to the ultimate destination.
 
-![image-20221006184504543](image-20221006184504543.png)
+![image-20221006184504543](assets/image-20221006184504543.png)
 
 Note: **These round-trip delays include all of the delays just discussed, including transmission delays, propagation delays, router processing delays, and queuing delay.**
 
@@ -861,7 +861,7 @@ This may include:
 
 #### Encapsulation 
 
-![image-20221006194711068](image-20221006194711068.png)
+![image-20221006194711068](assets/image-20221006194711068.png)
 
 # Chapter 2 - Application Layer
 
@@ -871,7 +871,7 @@ This may include:
 >
 > A process sends messages into, and receives messages from, the network through a software interface called a socket
 
-![image-20221006213124652](image-20221006213124652.png)
+![image-20221006213124652](assets/image-20221006213124652.png)
 
 
 
@@ -879,15 +879,15 @@ This may include:
 
 #### Request methods
 
-![image-20221006213257282](image-20221006213257282.png)
+![image-20221006213257282](assets/image-20221006213257282.png)
 
 #### Response Codes
 
-![image-20221006213320734](image-20221006213320734.png)
+![image-20221006213320734](assets/image-20221006213320734.png)
 
 #### HTTP Request message level views
 
-![image-20221006213426383](image-20221006213426383.png)
+![image-20221006213426383](assets/image-20221006213426383.png)
 
 ## Transport Services Available to Applications
 
@@ -945,7 +945,7 @@ An application-layer protocol defines how an application’s processes, running 
 
 ## 2.2 The Web and HTTP
 
-![image-20221006215558651](image-20221006215558651.png)
+![image-20221006215558651](assets/image-20221006215558651.png)
 
 ## 2.2.2 Non-Persistent and Persistent Connections
 
@@ -969,7 +969,7 @@ An application-layer protocol defines how an application’s processes, running 
 > 5. client receives message
 > 6. repeat
 
-![image-20221006220158495](image-20221006220158495.png)
+![image-20221006220158495](assets/image-20221006220158495.png)
 
 **One object per TCP connection**:
 
@@ -977,13 +977,13 @@ An application-layer protocol defines how an application’s processes, running 
 - network cost: ~2*RTT per object
 - end-host cost: 1 socket() for each object
 
-> ![image-20221006221558807](image-20221006221558807.png)
+> ![image-20221006221558807](assets/image-20221006221558807.png)
 >
 > TCP establishes a new connection before data gets transmitted
 
 ##### HTTP with non-persistant concurrent connections
 
-> ![image-20221006221843888](image-20221006221843888.png)
+> ![image-20221006221843888](assets/image-20221006221843888.png)
 >
 > TCP does the same but also parallels requests 
 
@@ -1000,16 +1000,16 @@ Persistent Pros:
 - These requests for objects can be made back-to-back, without waiting for replies to pending requests (pipelining)
 - server closes a connection when it isn’t used for a certain time (timeout)
 
-> ![image-20221006222012254](image-20221006222012254.png)
+> ![image-20221006222012254](assets/image-20221006222012254.png)
 
-> ![image-20221006222039387](image-20221006222039387.png)
+> ![image-20221006222039387](assets/image-20221006222039387.png)
 >
 > Persistent with pipelining
 >
 > - one tcp request 
 > - open connection with parallel 
 
-> ![image-20221006222238916](image-20221006222238916.png)
+> ![image-20221006222238916](assets/image-20221006222238916.png)
 
 ## 2.2.3 HTTP Message Format
 
@@ -1047,7 +1047,7 @@ The method field can take on several different values, including:
 - PUT
 - DELETE
 
-![image-20221006220756072](image-20221006220756072.png)
+![image-20221006220756072](assets/image-20221006220756072.png)
 
 ## 2.2.4 Cookies
 
@@ -1055,7 +1055,7 @@ The method field can take on several different values, including:
 
 - Many applications require states
 
-![image-20221006221325207](image-20221006221325207.png)
+![image-20221006221325207](assets/image-20221006221325207.png)
 
 ## 2.2.5 Web caching
 
@@ -1070,7 +1070,7 @@ The method field can take on several different values, including:
 3. If the Web cache does not have the object, the Web cache opens a TCP connection to the origin server, that is, to www.someschool.edu. The Web cache.
 4. When the Web cache receives the object, it stores a copy in its local storage and sends a copy, within an HTTP response message, to the client browser (over the existing TCP connection between the client browser and the Web cache).
 
-![image-20221011192459630](image-20221011192459630.png)
+![image-20221011192459630](assets/image-20221011192459630.png)
 
 ***Note:** a cache is both a server and a client at the same time.*
 
@@ -1084,7 +1084,7 @@ Typically a Web cache is purchased and installed by an ISP. For example, a unive
 
 #### Calculating the bottleneck of delay 
 
-![image-20221011192824637](image-20221011192824637.png)
+![image-20221011192824637](assets/image-20221011192824637.png)
 
 ##### Calculating: The traffic intensity on the LAN
 
@@ -1151,7 +1151,7 @@ Server: Apache/1.3.0 (Unix)
 >
 > DNS is also used to perform load distribution among replicated servers, such as replicated Web servers. Busy sites, such as cnn.com, are replicated over multiple servers, with each server running on a different end system and each having a different IP address.
 
-![image-20221011194905385](image-20221011194905385.png)
+![image-20221011194905385](assets/image-20221011194905385.png)
 
 > **Root DNS Servers**
 >
@@ -1182,7 +1182,7 @@ Server: Apache/1.3.0 (Unix)
 
 #### DNS Messages 
 
-![image-20221011202324458](image-20221011202324458.png)
+![image-20221011202324458](assets/image-20221011202324458.png)
 
 - First 12 bytes is the *Header* section. The first field is a 16-bit number that identifies the query.
 - The question section contains information about the query that is being made.
@@ -1368,14 +1368,14 @@ Recall that the Internet makes two distinct transport-layer protocols available 
 >
 > gathering data chunks at the source host from different sockets, encapsulating each data chunk with header information (that will later be used in demultiplexing) to create segments, and passing the segments to the network layer
 
-![image-20221020144808247](image-20221020144808247.png)
+![image-20221020144808247](assets/image-20221020144808247.png)
 
 **Multiplexing requires:**
 
 - That sockets have unique identifiers.
 - Each segment have special fields that indicate the socket to which the segment is to be delivered.
 
-![image-20221020145040333](image-20221020145040333.png)
+![image-20221020145040333](assets/image-20221020145040333.png)
 
 #### Connectionless Multiplexing and Demultiplexing 
 
@@ -1409,7 +1409,7 @@ clientSocket = socket(AF_INET, SOCK_STREAM) clientSocket.connect((serverName,120
 connectionSocket, addr = serverSocket.accept()
 ```
 
-![image-20221020150439112](image-20221020150439112.png)
+![image-20221020150439112](assets/image-20221020150439112.png)
 
 ![image-20221103143736599](assets/image-20221103143736599.png)
 
@@ -1450,7 +1450,7 @@ connectionSocket, addr = serverSocket.accept()
 
 The UDP header has only **four fields**, each consisting of **two bytes** (8 bytes total).
 
-![image-20221020151510531](image-20221020151510531.png)
+![image-20221020151510531](assets/image-20221020151510531.png)
 
 ![image-20221103144418768](assets/image-20221103144418768.png)
 
@@ -1458,7 +1458,7 @@ The UDP header has only **four fields**, each consisting of **two bytes** (8 byt
 
 UDP at the sender side performs the 1s complement of the sum of all the 16-bit words in the segment, with any overflow encountered during the sum being wrapped around. This result is put in the checksum field of the UDP segment.
 
-![image-20221020151908547](image-20221020151908547.png)
+![image-20221020151908547](assets/image-20221020151908547.png)
 
 Note that this last addition had overflow, which was wrapped around. The 1s
 complement is obtained by converting all the 0s to 1s and converting all the 1s to 0s. Thus, the 1s complement of the sum 0100101011000010 is 1011010100111101, which becomes the checksum. 
@@ -1589,9 +1589,9 @@ If the sender is willing to wait long enough so that it is certain that a packet
 
 This might also produce duplicate packets but the sequence number takes care of that normally.
 
-![image-20221020154048769](image-20221020154048769.png)
+![image-20221020154048769](assets/image-20221020154048769.png)
 
-![image-20221020154150691](image-20221020154150691.png)
+![image-20221020154150691](assets/image-20221020154150691.png)
 
 #### Stop-and-wait vs pipelined protocol
 
@@ -1605,7 +1605,7 @@ With our stop-and-wait protocol, if the sender begins sending the packet at t = 
 $$
 Usender = \frac{L/R}{RTT + L/R} = \frac{.008}{30.008} = 0.00027
 $$
-![image-20221020154932004](image-20221020154932004.png)
+![image-20221020154932004](assets/image-20221020154932004.png)
 
 ##### Pipelining 
 
@@ -1623,7 +1623,7 @@ Two basic approaches toward pipelined error recovery can be identified: **Go-Bac
 
 ###### Go-Back-N (GBN)
 
-![image-20221020155643058](image-20221020155643058.png)
+![image-20221020155643058](assets/image-20221020155643058.png)
 
 the sender is allowed to transmit multiple packets (when available) without waiting for an acknowledgment, but is constrained to have no more than some maximum allowable number, N, of unacknowledged packets in the pipeline.
 
@@ -1639,7 +1639,7 @@ An acknowledgment for a packet with sequence number n will be taken to be a **cu
 
 In our GBN protocol, the receiver discards out-of-order packets.
 
-![image-20221020160039365](image-20221020160039365.png)
+![image-20221020160039365](assets/image-20221020160039365.png)
 
 ###### Selective Repeat (SR)
 
@@ -1647,7 +1647,7 @@ In our GBN protocol, the receiver discards out-of-order packets.
 
 - when the window size and bandwidth-delay product are both large, many packets can be in the pipeline. A single packet error can thus cause GBN to retransmit a large number of packets, many unnecessarily. As the probability of channel errors increases, the pipeline can become filled with these unnecessary retransmissions. 
 
-![image-20221020160750119](image-20221020160750119.png)
+![image-20221020160750119](assets/image-20221020160750119.png)
 
 ## 3.5 Connection-Oriented Transport: TCP
 
@@ -1673,7 +1673,7 @@ Both Ethernet and PPP link-layer protocols have an MTU of 1,500 bytes.
 >
 > Maximum transmission unit
 
-![image-20221020161755945](image-20221020161755945.png)
+![image-20221020161755945](assets/image-20221020161755945.png)
 
 ##### TCP Connection ID
 
@@ -1692,7 +1692,7 @@ Both Ethernet and PPP link-layer protocols have an MTU of 1,500 bytes.
 
 When TCP sends a large file, such as an image as part of a Web page, it typically breaks the file into chunks of size MSS (except for the last chunk, which will often be less than the MSS)
 
-![image-20221020162035212](image-20221020162035212.png)
+![image-20221020162035212](assets/image-20221020162035212.png)
 
 **TCP packet/segment contains the following headers:**
 
@@ -1720,7 +1720,7 @@ When TCP sends a large file, such as an image as part of a Web page, it typicall
 
 ###### Sequence Numbers
 
-![image-20221020163034966](image-20221020163034966.png)
+![image-20221020163034966](assets/image-20221020163034966.png)
 
 Suppose that the data stream consists of a file consisting of 500,000 bytes, that the MSS is 1,000 bytes, and that the first byte of the data stream is numbered 0. As shown in Figure 3.30, TCP constructs 500 segments out of the data stream. The first segment gets assigned sequence number 0, the second segment gets assigned sequence number 1,000, the third segment gets assigned sequence number 2,000, and so on. Each sequence number is inserted in the sequence number field in the header of the appropriate TCP segment.
 
@@ -1730,7 +1730,7 @@ The acknowledgment number that Host A puts in its segment is the sequence number
 
 Because TCP only acknowledges bytes up to the first missing byte in the stream, TCP is said to provide **cumulative acknowledgments.**
 
-![image-20221020163524264](image-20221020163524264.png)
+![image-20221020163524264](assets/image-20221020163524264.png)
 
 #### Round-Trip Time Estimation and Timeout
 
@@ -1769,7 +1769,7 @@ $$
 >
 > retransmitting the missing segment before that segment’s timer expires.
 
-![image-20221020171130020](image-20221020171130020.png)
+![image-20221020171130020](assets/image-20221020171130020.png)
 
 ##### Is TCP Selective or a GBN Protocol?
 
@@ -1805,7 +1805,7 @@ The receive window, denoted rwnd is set to the amount of spare room in the buffe
 rwnd = RcvBuffer – [LastByteRcvd – LastByteRead]
 ```
 
-![image-20221020172108816](image-20221020172108816.png)
+![image-20221020172108816](assets/image-20221020172108816.png)
 
 ###### Window space
 
@@ -1827,9 +1827,9 @@ rwnd = RcvBuffer – [LastByteRcvd – LastByteRead]
 
 #### TCP connection Management
 
-![image-20221020172333938](image-20221020172333938.png)
+![image-20221020172333938](assets/image-20221020172333938.png)
 
-![image-20221020172358599](image-20221020172358599.png)
+![image-20221020172358599](assets/image-20221020172358599.png)
 
 This special segment has a flag bit in the segment’s header, the FIN bit (see Figure 3.29), set to 1. When the server receives this segment, it sends the client an acknowledgment segment in return. The server then sends its own shutdown segment, which has the FIN bit set to 1. Finally, the client acknowledges the server’s shutdown segment.
 
@@ -1862,21 +1862,21 @@ This special segment has a flag bit in the segment’s header, the FIN bit (see 
 
 #### The Causes and the Costs of Congestion
 
-![image-20221021093559185](image-20221021093559185.png)
+![image-20221021093559185](assets/image-20221021093559185.png)
 
 Makes it so that we can be in a constant state.
 
 ##### Scenario 1: Two Senders, a Router with Infinite Buffers
 
-![image-20221020172738281](image-20221020172738281.png)
+![image-20221020172738281](assets/image-20221020172738281.png)
 
 ##### Scenario 2: Two Senders and a Router with Finite Buffers
 
-![image-20221020172820689](image-20221020172820689.png)
+![image-20221020172820689](assets/image-20221020172820689.png)
 
 ##### Scenario 3: Four Senders, Routers with Finite Buffers, and Multihop Paths
 
-![image-20221020172908483](image-20221020172908483.png)
+![image-20221020172908483](assets/image-20221020172908483.png)
 
 #### Approaches to Congestion Control
 
@@ -1885,7 +1885,7 @@ two broad approaches to congestion control that are taken in practice and discus
 - **End-to-end congestion control** - TCP segment loss (as indicated by a timeout or the receipt of three duplicate acknowledgments) is taken as an indication of network congestion, and TCP decreases its window size accordingly.
 - **Network-assisted congestion control** - With network-assisted congestion control, routers provide explicit feedback to the sender and/or receiver regarding the congestion state of the network. This feedback may be as simple as a single bit indicating congestion at a link
 
-![image-20221020173117534](image-20221020173117534.png)
+![image-20221020173117534](assets/image-20221020173117534.png)
 
 ## 3.7 TCP Congestion Control
 
@@ -1906,7 +1906,7 @@ Because TCP uses acknowledgments to trigger (or clock) its increase in congestio
 
 #### Load-Gain Curve
 
-![image-20221021093357788](image-20221021093357788.png)
+![image-20221021093357788](assets/image-20221021093357788.png)
 
 > **Knee**
 >
@@ -1922,7 +1922,7 @@ Because TCP uses acknowledgments to trigger (or clock) its increase in congestio
 
 
 
-![image-20221021093712642](image-20221021093712642.png)
+![image-20221021093712642](assets/image-20221021093712642.png)
 
 - TCP sender control only because TCP has already been implemented for several years prior.
 
@@ -1934,26 +1934,26 @@ Slow start is adaptive and is not initialized implicitly.
 >
 > Slow start threshold
 
-![image-20221020173342993](image-20221020173342993.png)
+![image-20221020173342993](assets/image-20221020173342993.png)
 
 If there is a loss event (i.e., congestion) indicated by a timeout, the TCP sender sets the value of cwnd to 1 and begins the slow start process anew. 
 
-![image-20221021093926552](image-20221021093926552.png)
+![image-20221021093926552](assets/image-20221021093926552.png)
 
 ##### Network Congestion
 
-![image-20221021094609024](image-20221021094609024.png)
+![image-20221021094609024](assets/image-20221021094609024.png)
 
 #### Congestion Avoidance (In the middle section of the curve)
 
-![image-20221021093953370](image-20221021093953370.png)
+![image-20221021093953370](assets/image-20221021093953370.png)
 
 > when should congestion avoidance’s linear increase (of 1 MSS per RTT)
 > end?
 >
 > TCP’s congestion-avoidance algorithm behaves the same when a timeout occurs as in the case of slow start: The value of cwnd is set to 1 MSS, and the value of ssthresh is updated to half the value of cwnd when the loss event occurred.
 
-![image-20221020173739437](image-20221020173739437.png)
+![image-20221020173739437](assets/image-20221020173739437.png)
 
 > **additive-increase, multiplicative-decrease (AIMD)**
 >
@@ -1965,7 +1965,7 @@ If there is a loss event (i.e., congestion) indicated by a timeout, the TCP send
 >
 > Congestion Window 
 
-![image-20221021095212976](image-20221021095212976.png)
+![image-20221021095212976](assets/image-20221021095212976.png)
 
 #### Congestion control techniques
 
@@ -2001,7 +2001,7 @@ Duplicating acknowledgment
 - on 3rd dupack: ssthresh=cwnd/2; cwnd=1 MSS
 - followed by slow start
 
-![image-20221021095818170](image-20221021095818170.png)
+![image-20221021095818170](assets/image-20221021095818170.png)
 
 ##### Fast Recovery 
 
@@ -2017,7 +2017,7 @@ Duplicate Acknowledgment
 - On 3rd dupack: cwnd=ssthresh=cwnd/2
 - Followed by congestion avoidance
 
-![image-20221021100039713](image-20221021100039713.png)
+![image-20221021100039713](assets/image-20221021100039713.png)
 
 #### Other TCP congestion controls 
 
@@ -2034,7 +2034,7 @@ Duplicate Acknowledgment
 
 where packet loss occurred hasn’t changed much, then perhaps it’s better to more quickly ramp up the sending rate to get close to the pre-loss sending rate and only then probe cautiously for bandwidth.
 
-![image-20221020174109772](image-20221020174109772.png)
+![image-20221020174109772](assets/image-20221020174109772.png)
 
 The network drops a packet from the connection when the rate increases to W/RTT; the rate is then cut in half and then increases by MSS/RTT every RTT until it again reaches W/RTT. This process repeats itself over and over again. Because TCP’s throughput (that is, rate) increases linearly between the two extreme values, we have:
 $$
@@ -2048,7 +2048,7 @@ Explicit Congestion Notification [RFC 3168] is the form of network-assisted cong
 
 - both TCP and IP are involved.
 
-![image-20221020174424279](image-20221020174424279.png)
+![image-20221020174424279](assets/image-20221020174424279.png)
 
 #### Fairness of segments on the network 
 
@@ -2516,6 +2516,8 @@ With OSPF, a router broadcasts routing information to all other routers in the a
 - **Multiple same-cost paths -** OSPF allows multiple paths to be used, singe path is not needed.
 - **Integrated support for unicast and multicast routing -** MOSPF provides simple extensions to OSPF to provide for multicast routing. MOSPF uses the existing OSPF link database and adds a new type of link-state advertisement to the existing OSPF link-state broadcast mechanism.
 - **Support for hierarchy within a single Autonomous system -** OSPF autonomous system can be configured hierarchically into areas. Each area runs its own OSPF link-state routing algorithm, with each router in an area broadcasting its link state to all other routers in that area.
+
+![image-20221115165753097](assets/image-20221115165753097.png)
 
 ## 5.4 - Routing Among the ISPs: BGP
 
