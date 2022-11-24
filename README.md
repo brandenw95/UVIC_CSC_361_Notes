@@ -282,9 +282,21 @@
 
 ## Lecture Slides
 
-[Lecture 1](assets/lecture0.pdf)
+[Lecture 1](assets/L1.pdf)
 
+[Lecture 2](assests/L2.pdf)
 
+[Lecture 3](assests/L3.pdf)
+
+[Lecture 4](assests/L4.pdf)
+
+[Lecture 5](assests/L5.pdf)
+
+[Lecture 6](assests/L6.pdf)
+
+[Lecture 7](assests/L7.pdf)
+
+[Lecture 8](assests/L8.pdf)
 
 ## Course evaluation
 
@@ -2788,23 +2800,336 @@ ICMPv6 also added new types and codes required by the new IPv6 functionality. Th
 
 ## 6.1 - Introduction to the Link Layer
 
+> **Node**
+>
+> Anything that runs in the link layer. Include hosts, routers, switches, and WiFi access points
+
+> **Links**
+>
+> Communication channels that connect adjacent nodes along the communication path.
+
 #### 6.1.1 - The Services Provided by the Link Layer 
+
+- **Framing** - A frame consists of a data field, in which the network-layer datagram is inserted, and a number of header fields.
+- **Link Access** - A medium access control (MAC) protocol specifies the rules by which a frame is transmitted onto the link. For point-to-point links that have a single sender at one end of the link and a single receiver at the other end of the link, the MAC protocol is simple (or nonexistent)—the sender can send a frame whenever the link is idle. 
+- **Reliable delivery** - When a link-layer protocol provides reliable delivery service, it guarantees to move each network-layer datagram across the link without error.
+- **Error detection and correction** - Such bit errors are introduced by signal attenuation and electromagnetic noise. Because there is no need to forward a datagram that has an error, many link-layer protocols provide a mechanism to detect such bit errors. This is done by having the transmitting node include error-detection bits in the frame, and having the receiving node perform an error check.
+
+![image-20221123220252124](assets/image-20221123220252124.png)
+
+#### 6.1.1.1 Flow Control (Lecture Slides)
+
+##### Sliding-window-based flow control
+
+![image-20221123221736460](assets/image-20221123221736460.png)
+
+![image-20221123221755488](assets/image-20221123221755488.png)
+
+![image-20221123221810857](assets/image-20221123221810857.png)
+
+#### 6.1.1.2 representative link layer protocols (Lecture Slides)
+
+##### HDLC (High-level Data Link Control) 
+
+![image-20221123221829528](assets/image-20221123221829528.png)
+
+![image-20221123221841700](assets/image-20221123221841700.png)
+
+##### SLIP (Serial Line Internet Protocol)
+
+
+
+![image-20221123221855193](assets/image-20221123221855193.png)
+
+![image-20221123221914622](assets/image-20221123221914622.png)
+
+##### PPP (Point-to-Point Protocol)
+
+![image-20221123221926821](assets/image-20221123221926821.png)
+
+![image-20221123221940027](assets/image-20221123221940027.png)
+
+![image-20221123221956929](assets/image-20221123221956929.png)
+
+![image-20221123222023714](assets/image-20221123222023714.png)
+
+![image-20221123222035914](assets/image-20221123222035914.png)
+
+![image-20221123222048140](assets/image-20221123222048140.png)
 
 #### 6.1.2 - Where Is the Link Layer Implemented?
 
+The link layer is implemented on a chip called the network adapter, also sometimes known as a network <u>interface controller (NIC)</u>.
+
+most of the link layer is implemented in hardware,
+part of the link layer is implemented in software that runs on the host’s CPU. The software components of the link layer implement higher-level link-layer functionality such as assembling link-layer addressing information and activating the controller hardware.
+
+![image-20221123203935805](assets/image-20221123203935805.png)
+
 ## 6.2 - Error-Detection and -Correction Techniques
+
+>  **bit-level error detection and correction**
+>
+> detecting and correcting the corruption of bits in a link-layer frame sent from one node to another physically connected neighboring node—are two services often provided by the link layer.
+
+![image-20221123204104599](assets/image-20221123204104599.png)
+
+##### Byte-oriented framing
+
+- Uses Byte stuffing
+
+![image-20221123220452125](assets/image-20221123220452125.png)
+
+##### Bit-oriented framing
+
+![image-20221123220507771](assets/image-20221123220507771.png)
+
+##### Error control, Hamming and Hamming's code
+
+- Utilized in ALOHA protocols
+
+![image-20221123220552647](assets/image-20221123220552647.png)
+
+![image-20221123220732040](assets/image-20221123220732040.png)
 
 #### 6.2.1 - Parity Checks
 
-#### 6.2.2 - Check summing Methods 6.3
+##### Even vs odd parity bits
+
+- In an even parity scheme, the sender simply includes one additional bit and chooses its value such that the total number of 1s in the d + 1 bits (the original information plus a parity bit) is even.
+- For odd parity schemes, the parity bit value is chosen such that there is an odd number of 1s. Figure 6.4 illustrates an even parity scheme, with the single parity bit being stored in a separate field.
+
+Undetected parity error if even number of error bits occur, this is rare.
+
+![image-20221123204533119](assets/image-20221123204533119.png)
+
+##### Two-Dimensional Parity bit check
+
+Here, the d bits in D are divided into i rows and j columns. A parity value is computed for each row and for each column. The resulting i + j + 1 parity bits comprise the link-layer frame’s error-detection bits.
+
+![image-20221123204711192](assets/image-20221123204711192.png)
+
+> **Forward error correction (FEC)**
+>
+> The ability of the receiver to both detect and correct errors. These techniques are commonly used in audio storage and playback devices such as audio CDs.
+
+![image-20221123220653005](assets/image-20221123220653005.png)
+
+#### 6.2.2 - Check summing Methods
+
+In checksumming techniques, the d bits of data in Figure 6.4 are treated as a sequence of k-bit integers. One simple checksumming method is to simply sum these k-bit integers and use the resulting sum as the error-detection bits.
+
+**Steps**:
+
+1. bytes of data are treated as 16-bit integers and summed
+2. The 1s complement of this sum then forms the Internet checksum that is carried in the segment header.
+3. the receiver checks the checksum by taking the 1s complement of the sum of the received data (including the checksum) and checking whether the result is all 0 bits.
+4. If any of the bits are 1, an error is indicated.
+
+Checksumming methods require relatively little packet overhead (16-bits). Provides relatively weak protection against errors as compared with cyclic redundancy check
+
+##### Check Summing vs Cyclic Redundancy
+
+**Transport layer** is typically implemented in software in a host as part of the host’s operating system. Because transport-layer error detection is implemented in **software**, it is important to have a simple and fast error-detection scheme such as **checksumming**.
+
+**Link Layer** error detection is implemented in **dedicated hardware** in adapters, which can rapidly perform the more **complex CRC operations**.
+
+- Link Layer = Hardware = Cyclic Redundancy
+- Transport Layer = Software = Check Summing
+
+![image-20221123220757775](assets/image-20221123220757775.png)
 
 #### 6.2.3 - Cyclic Redundancy Check (CRC)
 
+> **cyclic redundancy check (CRC) codes // Polynomial Codes**
+>
+> It is possible to view the bit string to be sent as a polynomial whose coefficients are the 0 and 1 values in the bit string, with operations on the bit string interpreted as polynomial arithmetic.
+
+**Steps:**
+
+1. The sender and receiver must first agree on an r + 1 bit pattern, known as a **generator**, which we will denote as G.
+2. We will require that the most significant (leftmost) bit of G be a 1.
+3. For a given piece of data, D, the sender will choose r additional bits, R, and append them to D such that the resulting d + r bit pattern (interpreted as a binary number) is exactly divisible by G (i.e., has no remainder) using modulo-2 arithmetic.
+4. The receiver divides the d + r received bits by G. If the remainder is nonzero, the receiver knows that an error has occurred; otherwise the data is accepted as being correct.
+
+![image-20221123220837368](assets/image-20221123220837368.png)
+
+>  ***Note*:** All CRC calculations are done in modulo-2 arithmetic without carries in addition or borrows in subtraction.
+
+> Example:
+>
+> ![image-20221123210054958](assets/image-20221123210054958.png)
+>
+> Also, we similarly have:
+>
+> ![image-20221123210134103](assets/image-20221123210134103.png)
+
+![image-20221123210204606](assets/image-20221123210204606.png)
+
+##### CRC Algorithm 
+
+![image-20221123210326406](assets/image-20221123210326406.png)
+
+> **Examples:**
+>
+> ![image-20221123210405438](assets/image-20221123210405438.png)
+>
+> ![image-20221123220909425](assets/image-20221123220909425.png)
+
+##### Error Recovery 
+
+![image-20221123220939196](assets/image-20221123220939196.png)
+
 ## 6.3 - Multiple Access Links and Protocols
+
+Two types of protocols:
+
+- **point-to-point link** - A single sender at one end of the link and a single receiver at the other end of the link.
+- **broadcast link** - Can have multiple sending and receiving nodes all connected to the same, single, shared broadcast channel. (Ex. Ethernet and wireless LANs)
+
+> **multiple access problem**
+>
+> How to coordinate the access of multiple sending and receiving nodes to a shared broadcast channel.
+
+> **multiple access protocols**
+>
+> Nodes regulate their transmission into the shared broadcast channel.
+
+![image-20221123211055756](assets/image-20221123211055756.png)
+
+**The 3 Multiple access protocol categories:**
+
+- Channel partitioning protocols
+- Random access protocols
+- Taking-turns protocols
+
+**Characteristics of a Multiple Access Protocol:**
+
+1. When only one node has data to send, that node has a throughput of R bps.
+2. When M nodes have data to send, each of these nodes has a throughput of R/M bps. This need not necessarily imply that each of the M nodes always has an instantaneous rate of R/M, but rather that each node should have an average transmission rate of R/M over some suitably defined interval of time.
+3. The protocol is decentralized; that is, there is no master node that represents a single point of failure for the network.
+4. The protocol is simple, so that it is inexpensive to implement.
 
 #### 6.3.1 - Channel Partitioning Protocols 
 
+Partitioning can use FDM, TDM or CDMA.
+
+> ##### **Frequency-division multiplexing (FDM)**
+>
+> 
+>
+> ![image-20221123211553395](assets/image-20221123211553395.png)
+>
+> **Pros:**
+>
+> - It avoids collisions
+> - divides the bandwidth fairly among the N nodes.
+>
+> **Cons:**
+>
+> - Node is limited to a bandwidth of R/N, even when it is the only node with packets to send.
+
+> ##### **Time-division multiplexing (TDM)**
+>
+> 
+>
+> ![image-20221123211637561](assets/image-20221123211637561.png)
+>
+> **Pros:**
+>
+> - Eliminates Collisions.
+> - Perfectly Fair - Each node gets a dedicated transmission rate.
+>
+> **Cons:**
+>
+> - Node is limited to an average rate of R/N bps even when it is the only node with packets to send.
+> - that a node must always wait for its turn in the transmission sequence.
+
+> ##### **Code division multiple access (CDMA)**
+>
+> 
+>
+> CDMA assigns a different code to each node. Each node then uses its unique code to encode the data bits it sends. Data can be sent simultaneously.
+>
+> - Military applications (Anti-jamming Properties)
+> - Call towers because of its ties to Wireless networks
+
 #### 6.3.2 - Random Access Protocols 
+
+A transmitting node always transmits at the full rate of the channel, namely, R bps. When there is a collision, each node involved in the collision repeatedly retransmits its frame (that is, packet) until its frame gets through without a collision. 
+
+> ***Note:*** Utilizes a Random delay to avoid collisions.
+
+**Four major Random access protocols:**
+
+- Slotted ALOHA
+- Pure ALOHA
+- Carrier Sense Multiple Access (CSMA)
+- Carrier Sense Multiple Access with Collison detection (CSMA/CD)
+
+> ##### Slotted ALOHA
+>
+> 
+>
+> ![image-20221123214239193](assets/image-20221123214239193.png)
+>
+> ######  Properties:
+>
+> - All frames consist of exactly L bits. 
+> - Time is divided into slots of size L/R seconds (that is, a slot equals the time to transmit one frame).
+> - Nodes start to transmit frames only at the beginnings of slots.
+> - The nodes are synchronized so that each node knows when the slots begin. 
+> - If two or more frames collide in a slot, then all the nodes detect the collision event before the slot ends.
+>
+> ###### Operation:
+>
+> 1. When the node has a fresh frame to send, it waits until the beginning of the next slot and transmits the entire frame in the slot.
+> 2. If there isn’t a collision, the node has successfully transmitted its frame and thus need not consider retransmitting the frame. (The node can prepare a new frame for transmission, if it has one.)
+> 3. If there is a collision, the node detects the collision before the end of the slot. The node retransmits its frame in each subsequent slot with probability p until the frame is transmitted without a collision.
+>
+> ###### Pros:
+>
+> - Allows a node to transmit continuously at the full rate, R, when that node is the only active node.
+> - Is also highly decentralized, because each node detects collisions and independently decides when to retransmit.
+> - Extremely simple protocol.
+>
+> ###### Cons:
+>
+> - Requires the slots to be synchronized in the nodes.
+>
+> ###### Efficiency: 
+>
+> $$
+>  \lim_{N \rightarrow \infty } Np \big(1-p\big) N-1 =  \frac{1}{e} 
+> $$
+>
+> when there are N active nodes, the efficiency of slotted ALOHA is
+> Np(1 - p)N-1. To obtain the maximum efficiency for N active nodes, we have to find the p* that maximizes this expression. (See the homework problems for a general outline of this derivation.) And to obtain the maximum efficiency for a large number of active nodes, we take the limit of Np*(1 - p*)N-1 as N approaches infinity. (Again, see the homework problems.) After performing these calculations, we’ll find that the maximum efficiency of the protocol is given by 1/e = 0.37. That is, when a large number of nodes have many frames to transmit, then (at best) only 37 percent of the slots do useful work. Thus, the effective transmission rate of the channel is not R bps but only 0.37 R bps!
+
+> ##### Pure ALOHA
+>
+> 
+>
+> ![image-20221123215329661](assets/image-20221123215329661.png)
+>
+> - Fully decentralized protocol
+> - No time slots 
+>
+> ###### Efficiency:
+>
+> $$
+>  \lim_{N \rightarrow \infty } Np \big(1-p\big) 2\big(N-1\big) =  \frac{1}{2e} 
+> $$
+>
+> The probability that all other nodes do not begin a transmission in this interval is (1 - p)N-1. Similarly, no other node can begin a transmission while node i is transmitting, as such a transmission would overlap with the latter part of node i’s transmission. The probability that all other nodes do not begin a transmission in this interval is also (1 - p)N-1. Thus, the probability that a given node has a successful transmission is p(1 - p)2(N-1). By taking limits as in the slotted ALOHA case, we find that the maximum efficiency of the pure ALOHA protocol is only 1/(2e)—exactly half that of slotted ALOHA.
+
+> ##### Carrier Sense Multiple Access (CSMA)
+>
+> ![image-20221123215858869](assets/image-20221123215858869.png)
+
+> ##### Carrier Sense Multiple Access with Collison detection (CSMA/CD)
+>
+> ![image-20221123215920355](assets/image-20221123215920355.png)
 
 #### 6.3.3 - Taking-Turns Protocols
 
