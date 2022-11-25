@@ -331,6 +331,34 @@
 
 [Lecture 8](assests/L8.pdf)
 
+[Lecture 9](assests/L9.pdf)
+
+[Lecture 10](assests/L10.pdf)
+
+[Lecture 11](assests/L11.pdf)
+
+[Lecture 12](assests/L12.pdf)
+
+[Lecture 13](assests/L13.pdf)
+
+[Lecture 14](assests/L14.pdf)
+
+[Lecture 15](assests/L15.pdf)
+
+[Lecture 16](assests/L16.pdf)
+
+[Lecture 17](assests/L17.pdf)
+
+[Lecture 18](assests/L18.pdf)
+
+[Lecture 19](assests/L19.pdf)
+
+[Lecture 20](assests/L20.pdf)
+
+[Lecture 21](assests/L21.pdf)
+
+[Lecture 22](assests/L22.pdf)
+
 ## Course evaluation
 
 - one written assignment (5%)
