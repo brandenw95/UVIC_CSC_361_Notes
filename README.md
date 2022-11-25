@@ -5,11 +5,11 @@
 [TOC]
 
 - [Class Intro](#class-intro)
-
   * [Content](#content)
       - [First month](#first-month)
       - [Second month](#second-month)
       - [Third month](#third-month)
+  * [Lecture Slides](#lecture-slides)
   * [Course evaluation](#course-evaluation)
 - [Written Assignments](#written-assignments)
   * [Worksheet 1 Answers](#worksheet-1-answers)
@@ -204,12 +204,17 @@
         * [DV Algorithm: Link-Cost changes and Link Failure](#dv-algorithm--link-cost-changes-and-link-failure)
         * [Count-to-infinity](#count-to-infinity)
   * [5.3 - Intra-AS Routing in the Internet: OSPF](#53---intra-as-routing-in-the-internet--ospf)
+        * [Routing Information Protocol (RIP)](#routing-information-protocol--rip-)
+          + [Routing Information Protocol Advertisements](#routing-information-protocol-advertisements)
         * [Open Shortest Path First (OSPF)](#open-shortest-path-first--ospf-)
+          + [OSPF Messages](#ospf-messages)
+          + [Hierarchical OSPF](#hierarchical-ospf)
   * [5.4 - Routing Among the ISPs: BGP](#54---routing-among-the-isps--bgp)
       - [5.4.1 The Role of BGP](#541-the-role-of-bgp)
       - [5.4.2 Advertising BGP Route Information](#542-advertising-bgp-route-information)
         * [BGP connections](#bgp-connections)
       - [5.4.3 Determining the Best Routes](#543-determining-the-best-routes)
+        * [BGP Messages](#bgp-messages)
         * [Hot Potato Routing](#hot-potato-routing)
           + [Algorithm steps:](#algorithm-steps-)
           + [Summery of the "Hot Potato Algorithm](#summery-of-the--hot-potato-algorithm)
@@ -218,6 +223,7 @@
       - [5.4.4 IP-Anycast](#544-ip-anycast)
       - [5.4.5 Routing Policy](#545-routing-policy)
       - [5.4.6 Putting the Pieces Together: Obtaining Internet Presence](#546-putting-the-pieces-together--obtaining-internet-presence)
+        * [Summery](#summery)
   * [5.6 - ICMP: The Internet Control Message Protocol](#56---icmp--the-internet-control-message-protocol)
       - [**ICMP Code table:**](#--icmp-code-table---)
       - [How does a Traceroute source know when to stop sending UDP segments?](#how-does-a-traceroute-source-know-when-to-stop-sending-udp-segments-)
@@ -225,14 +231,41 @@
 - [Chapter 6 - The Link Layer and LANs](#chapter-6---the-link-layer-and-lans)
   * [6.1 - Introduction to the Link Layer](#61---introduction-to-the-link-layer)
       - [6.1.1 - The Services Provided by the Link Layer](#611---the-services-provided-by-the-link-layer)
+      - [6.1.1.1 Flow Control (Lecture Slides)](#6111-flow-control--lecture-slides-)
+        * [Sliding-window-based flow control](#sliding-window-based-flow-control)
+      - [6.1.1.2 representative link layer protocols (Lecture Slides)](#6112-representative-link-layer-protocols--lecture-slides-)
+        * [HDLC (High-level Data Link Control)](#hdlc--high-level-data-link-control-)
+        * [SLIP (Serial Line Internet Protocol)](#slip--serial-line-internet-protocol-)
+        * [PPP (Point-to-Point Protocol)](#ppp--point-to-point-protocol-)
       - [6.1.2 - Where Is the Link Layer Implemented?](#612---where-is-the-link-layer-implemented-)
   * [6.2 - Error-Detection and -Correction Techniques](#62---error-detection-and--correction-techniques)
+        * [Byte-oriented framing](#byte-oriented-framing)
+        * [Bit-oriented framing](#bit-oriented-framing)
+        * [Error control, Hamming and Hamming's code](#error-control--hamming-and-hamming-s-code)
       - [6.2.1 - Parity Checks](#621---parity-checks)
-      - [6.2.2 - Check summing Methods 6.3](#622---check-summing-methods-63)
+        * [Even vs odd parity bits](#even-vs-odd-parity-bits)
+        * [Two-Dimensional Parity bit check](#two-dimensional-parity-bit-check)
+      - [6.2.2 - Check summing Methods](#622---check-summing-methods)
+        * [Check Summing vs Cyclic Redundancy](#check-summing-vs-cyclic-redundancy)
       - [6.2.3 - Cyclic Redundancy Check (CRC)](#623---cyclic-redundancy-check--crc-)
+        * [CRC Algorithm](#crc-algorithm)
+        * [Error Recovery](#error-recovery)
   * [6.3 - Multiple Access Links and Protocols](#63---multiple-access-links-and-protocols)
       - [6.3.1 - Channel Partitioning Protocols](#631---channel-partitioning-protocols)
+        * [**Frequency-division multiplexing (FDM)**](#--frequency-division-multiplexing--fdm---)
+        * [**Time-division multiplexing (TDM)**](#--time-division-multiplexing--tdm---)
+        * [**Code division multiple access (CDMA)**](#--code-division-multiple-access--cdma---)
       - [6.3.2 - Random Access Protocols](#632---random-access-protocols)
+        * [Slotted ALOHA](#slotted-aloha)
+          + [Properties:](#properties-)
+          + [Operation:](#operation-)
+          + [Pros:](#pros-)
+          + [Cons:](#cons-)
+          + [Efficiency:](#efficiency-)
+        * [Pure ALOHA](#pure-aloha)
+          + [Efficiency:](#efficiency--1)
+        * [Carrier Sense Multiple Access (CSMA)](#carrier-sense-multiple-access--csma-)
+        * [Carrier Sense Multiple Access with Collison detection (CSMA/CD)](#carrier-sense-multiple-access-with-collison-detection--csma-cd-)
       - [6.3.3 - Taking-Turns Protocols](#633---taking-turns-protocols)
   * [6.4 - Switched Local Area Networks](#64---switched-local-area-networks)
       - [6.4.1 - Link-Layer Addressing and ARP](#641---link-layer-addressing-and-arp)
@@ -3014,7 +3047,7 @@ Two types of protocols:
 
 Partitioning can use FDM, TDM or CDMA.
 
-> ##### **Frequency-division multiplexing (FDM)**
+> ##### Frequency-division multiplexing (FDM)
 >
 > 
 >
@@ -3029,7 +3062,7 @@ Partitioning can use FDM, TDM or CDMA.
 >
 > - Node is limited to a bandwidth of R/N, even when it is the only node with packets to send.
 
-> ##### **Time-division multiplexing (TDM)**
+> ##### Time-division multiplexing (TDM)
 >
 > 
 >
@@ -3045,7 +3078,7 @@ Partitioning can use FDM, TDM or CDMA.
 > - Node is limited to an average rate of R/N bps even when it is the only node with packets to send.
 > - that a node must always wait for its turn in the transmission sequence.
 
-> ##### **Code division multiple access (CDMA)**
+> ##### Code division multiple access (CDMA)
 >
 > 
 >
