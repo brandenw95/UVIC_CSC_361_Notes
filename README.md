@@ -317,47 +317,47 @@
 
 [Lecture 1](assets/L1.pdf)
 
-[Lecture 2](assests/L2.pdf)
+[Lecture 2](assets/L2.pdf)
 
-[Lecture 3](assests/L3.pdf)
+[Lecture 3](assets/L3.pdf)
 
-[Lecture 4](assests/L4.pdf)
+[Lecture 4](assets/L4.pdf)
 
-[Lecture 5](assests/L5.pdf)
+[Lecture 5](assets/L5.pdf)
 
-[Lecture 6](assests/L6.pdf)
+[Lecture 6](assets/L6.pdf)
 
-[Lecture 7](assests/L7.pdf)
+[Lecture 7](assest/L7.pdf)
 
-[Lecture 8](assests/L8.pdf)
+[Lecture 8](assets/L8.pdf)
 
-[Lecture 9](assests/L9.pdf)
+[Lecture 9](assets/L9.pdf)
 
-[Lecture 10](assests/L10.pdf)
+[Lecture 10](assets/L10.pdf)
 
-[Lecture 11](assests/L11.pdf)
+[Lecture 11](assets/L11.pdf)
 
-[Lecture 12](assests/L12.pdf)
+[Lecture 12](assets/L12.pdf)
 
-[Lecture 13](assests/L13.pdf)
+[Lecture 13](assets/L13.pdf)
 
-[Lecture 14](assests/L14.pdf)
+[Lecture 14](assets/L14.pdf)
 
-[Lecture 15](assests/L15.pdf)
+[Lecture 15](assets/L15.pdf)
 
-[Lecture 16](assests/L16.pdf)
+[Lecture 16](assets/L16.pdf)
 
-[Lecture 17](assests/L17.pdf)
+[Lecture 17](assets/L17.pdf)
 
-[Lecture 18](assests/L18.pdf)
+[Lecture 18](assets/L18.pdf)
 
-[Lecture 19](assests/L19.pdf)
+[Lecture 19](assets/L19.pdf)
 
-[Lecture 20](assests/L20.pdf)
+[Lecture 20](assets/L20.pdf)
 
-[Lecture 21](assests/L21.pdf)
+[Lecture 21](assets/L21.pdf)
 
-[Lecture 22](assests/L22.pdf)
+[Lecture 22](assets/L22.pdf)
 
 ## Course evaluation
 
