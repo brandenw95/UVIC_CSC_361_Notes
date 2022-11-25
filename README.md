@@ -313,6 +313,14 @@
 - Network layers: IP addressing and routing
 - link layers: logical link, media access
 
+## Assignments 
+
+[Assignment 1](assignments/A1.pdf)
+
+[Assignment 2](assignments/A2.pdf)
+
+[Assignment 3](assignments/A3.pdf)
+
 ## Lecture Slides
 
 [Lecture 1](assets/L1.pdf)
