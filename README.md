@@ -356,52 +356,7 @@
 - Three programming assignments (35%) 
 - Weekly homework (10%) + participation (5%)
 
-# Written Assignments
-
-## Worksheet 1 Answers
-
-Internet access over telephone lines has been driven by our desire for higher speed. Given the following fact: voice bandwidth: 3000 Hz, signal-to-noise ratio between two phone sets: 30dB, modem sampling rate: 2400 baud, please explain concisely:
-
-- **how your old modem was improved from 2.4 to 9.6 and 28.8kbps in speed.**
-  - ANS: By packing more bits in a denser symbol from 1 to 4 bits/symbol at 2400 samples per second for 2.4 to 9.6 kbps
-- **Why does the improvement stop around 33.6 Kbps?**
-  - ANS: due to limited S/N (30dB = 3B = 10^3) and bandwidth (3kHz) [3000* log_2 (1+10^3) = about 30kbps]
-- **How was 56 Kbps achieved otherwise?**
-  - ANS: By removing the modem at ISP so higher S/N and asymetric bandwidth allocation so 56kbps downlink
-- How does your modem or ONT achieve higher speeds?
-  - ANS: By removing the filter at the switch so higher bandwidth over shorter distances, or much better bandwidth with fiber.
-
- (for the lecture next week on HTTP) A simplified HTML document is at http://a.b.com/index.html
-
-```html
-<html>
-<a href="fig/tiny.gif"><img src="fig/small.gif"></a>
-<img src="http://x.y.com/fig/big.gif">
-<img src="http://a.b.com/fig/huge.gif">
-</html>
-```
-
-Please show your work. For a web browser that loads images (GIF files) automatically, how long (in round-trip
-time) does it take, excluding the DNS overhead, to display the entire Web page if all files are small enough to
-be accommodated in one packet and:
-
-**(a) non-persistent, non-parallel HTTP connections are used [0.5]**
-
-ANS: 2RTTs for index, 2 for small, 2 for big and 2 for huge (2+2+2+2 = 8RTTs with 4 TCP connections) 
-
-**(b) non-persistent HTTP connections with at most two parallel connections are used [0.5]**
-
-ANS: 2RTTs for index, 2 for small and big in 2 parallel connections and 2 for huge. (2+2+2=6 RTTs with 2 TCPs)
-
-**(c) persistent, non-parallel HTTP connections without pipelining are used [0.5]**
-
-ANS: 2 RTTs for index , 1 for small, 1 for huge and 2 RTTs for big on x.y.com (2+1+1+2 = 6 RTTS with 2TCPs)
-
-**(d) persistent, non-parallel HTTP connections with pipelining are used. [0.5]**
-
-ANS:2 RTTs for index, 1 for both small and huge, and 2 RTTs for big on x.y.com (2+1+2 = 5RTTs with 2TCPs)
-
-# MIDTERM 2 
+# MIDTERM 
 
 ## Midterm Content
 
