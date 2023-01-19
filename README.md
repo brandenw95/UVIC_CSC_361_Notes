@@ -289,14 +289,6 @@
 
 # Class Intro
 
->Office hours: Monday 10am - 12pm on zoom
->
->pan@uvic.ca
->
->https://web.uvic.ca/~pan
->
->tutorial starts sept 9th 1:30PM
-
 ## Content
 
 #### First month
